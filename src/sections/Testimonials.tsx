@@ -10,7 +10,7 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    quote: "DottCiblez delivered a reliable and scalable healthcare platform for us. The application is smooth, secure, and exactly aligned with our accessibility goals.",
+    quote: "Team Innoventix delivered a reliable and scalable healthcare platform for us. The application is smooth, secure, and exactly aligned with our accessibility goals.",
     author: "Healthcare Platform Client",
     role: "Product Owner",
     company: "HearingZen",

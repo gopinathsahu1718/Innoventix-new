@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Menu, X, ChevronRight } from 'lucide-react';
+import logo from '/assets/logo.png';
 
 const navLinks = [
   { name: 'About Us', href: '#about' },
@@ -43,7 +44,7 @@ export default function Navbar() {
         }`}
         style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <a
@@ -54,9 +55,14 @@ export default function Navbar() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
-              <span className="font-display text-2xl font-bold text-white tracking-tight group-hover:text-[#3b82f6] transition-colors duration-300">
-                Innoventix
-              </span>
+              <img
+                src={logo}
+                alt="Logo"
+                className="h-14 w-auto object-contain"
+                // onError={(e) => {
+                //   (e.target as HTMLImageElement).style.display = 'none';
+                // }}
+              />
             </a>
 
             {/* Desktop Navigation */}
