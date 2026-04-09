@@ -106,36 +106,42 @@ function ServiceCard({ service, index, isVisible }: ServiceCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative bg-[#111] border border-white/10 rounded-2xl p-6 sm:p-8 h-full overflow-hidden transition-all duration-300 hover:border-[#3b82f6]/50 hover:shadow-xl hover:shadow-[#0e43a6]/20 flex flex-col">
+      <div className="relative bg-gradient-to-br from-slate-900/40 via-slate-950/60 to-slate-950/80 border border-slate-700/50 rounded-2xl p-6 sm:p-8 h-full overflow-hidden transition-all duration-300 hover:border-sky-400/60 hover:shadow-2xl hover:shadow-sky-500/10 flex flex-col group-hover:bg-slate-950/70">
+        {/* Glow Background on Hover */}
+        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-cyan-500/5 via-sky-500/5 to-indigo-500/5" />
+        
+        {/* Top Accent Line */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-400/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
         {/* Number Badge */}
         <span
-          className="absolute top-4 right-4 font-accent text-6xl sm:text-7xl font-bold text-gradient opacity-30 group-hover:opacity-50 transition-opacity duration-300"
+          className="absolute top-6 right-6 font-display text-5xl sm:text-6xl font-bold bg-gradient-to-r from-cyan-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent opacity-20 group-hover:opacity-40 transition-opacity duration-300"
           style={{ transform: isHovered ? 'scale(1.1) rotate(-5deg)' : 'scale(1) rotate(0deg)', transition: 'transform 0.3s ease' }}
         >
           {service.number}
         </span>
 
-        {/* Icon */}
-        <div className="relative mb-6">
-          <div className="w-14 h-14 rounded-xl bg-gradient-brand flex items-center justify-center group-hover:shadow-lg group-hover:shadow-[#0e43a6]/30 transition-all duration-300">
-            <Icon className="w-7 h-7 text-white" />
+        {/* Icon with Gradient Background */}
+        <div className="relative mb-6 z-10">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500/30 to-sky-500/30 flex items-center justify-center group-hover:shadow-lg group-hover:shadow-sky-500/30 transition-all duration-300 border border-sky-400/30 group-hover:border-sky-400/60">
+            <Icon className="w-7 h-7 text-sky-200 group-hover:text-sky-100 transition-colors duration-300" />
           </div>
         </div>
 
         {/* Content */}
-        <h3 className="font-display text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-gradient transition-all duration-300">
+        <h3 className="font-display text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-sky-100 transition-colors duration-300 relative z-10">
           {service.title}
         </h3>
-        <p className="text-white/60 text-sm leading-relaxed mb-6 flex-grow">
+        <p className="text-slate-300/80 text-sm leading-relaxed mb-6 flex-grow relative z-10">
           {service.description}
         </p>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 mt-auto">
+        {/* Tags with Enhanced Styling */}
+        <div className="flex flex-wrap gap-2 mt-auto relative z-10">
           {service.tags.map((tag, tagIndex) => (
             <span
               key={tag}
-              className="px-3 py-1 text-xs font-medium bg-white/5 text-white/70 rounded-full border border-white/10 group-hover:bg-[#0e43a6]/20 group-hover:border-[#0e43a6]/30 transition-all duration-300"
+              className="px-3 py-1.5 text-xs font-medium bg-slate-800/40 text-sky-200/90 rounded-full border border-sky-500/30 group-hover:bg-sky-500/20 group-hover:border-sky-400/60 group-hover:text-sky-100 transition-all duration-300 backdrop-blur-sm"
               style={{ transitionDelay: `${tagIndex * 50}ms` }}
             >
               {tag}
@@ -147,7 +153,7 @@ function ServiceCard({ service, index, isVisible }: ServiceCardProps) {
         <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
-            background: 'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(14, 67, 166, 0.15) 0%, transparent 50%)',
+            background: 'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(14, 165, 233, 0.08) 0%, transparent 60%)',
           }}
         />
       </div>
@@ -181,24 +187,29 @@ export default function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-gradient-dark overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#05070f] overflow-hidden"
     >
-      {/* Background Decorations */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#0e43a6]/10 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#06b6d4]/10 rounded-full blur-[150px] pointer-events-none" />
+      {/* Animated Gradient Background */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.08),_transparent_40%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.08),_transparent_40%)]" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Dynamic Decorative Elements */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-72 h-72 bg-sky-500/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="relative max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16 sm:mb-20">
-          <span
-            className={`inline-block font-accent text-sm uppercase tracking-[0.2em] text-[#3b82f6] mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          <div
+            className={`inline-flex items-center gap-2 rounded-full border border-slate-500/30 bg-slate-900/50 px-4 py-2 text-xs uppercase tracking-[0.4em] text-sky-200/80 shadow-[0_0_40px_rgba(56,189,248,0.14)] backdrop-blur-sm transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
+            <span className="w-1.5 h-1.5 bg-sky-400 rounded-full animate-pulse" />
             Enterprise Solutions
-          </span>
+          </div>
           <h2
-            className={`font-display text-4xl sm:text-5xl font-bold text-white mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            className={`font-display text-4xl sm:text-5xl font-bold text-white mb-6 transition-all duration-700 mt-6 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
             style={{
               transitionTimingFunction: 'var(--ease-expo-out)',
@@ -208,7 +219,7 @@ export default function Services() {
             Transform Your Business
           </h2>
           <p
-            className={`text-lg text-white/60 max-w-2xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
+            className={`text-lg text-slate-300/90 max-w-2xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
               }`}
             style={{
               transitionTimingFunction: 'var(--ease-smooth)',
@@ -240,11 +251,11 @@ export default function Services() {
             transitionDelay: '1000ms'
           }}
         >
-          <h3 className="font-display text-2xl sm:text-3xl font-semibold text-white mb-6">
-            Ready to Get Started?
+          <h3 className="font-display text-2xl sm:text-3xl font-semibold text-white mb-6 tracking-tight">
+            Ready to Transform Your Business?
           </h3>
-          <p className="text-white/60 mb-8 max-w-xl mx-auto">
-            Let&apos;s discuss how we can help transform your business with our enterprise solutions
+          <p className="text-slate-300/80 mb-8 max-w-xl mx-auto leading-relaxed">
+            Let&apos;s discuss how we can help accelerate your growth with our cutting-edge enterprise solutions
           </p>
           <a
             href="#contact"
@@ -252,7 +263,7 @@ export default function Services() {
               e.preventDefault();
               document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-brand text-white font-semibold rounded-full hover:shadow-xl hover:shadow-[#0e43a6]/40 transition-all duration-300 group"
+            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyan-500 via-sky-500 to-indigo-500 text-white font-semibold rounded-full hover:shadow-2xl hover:shadow-sky-500/40 transition-all duration-300 group hover:scale-105"
           >
             <Calendar className="w-5 h-5" />
             Schedule Consultation

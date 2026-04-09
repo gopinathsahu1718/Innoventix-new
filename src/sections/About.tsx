@@ -51,8 +51,8 @@ export default function About() {
   }, []);
 
   const stats = [
-    { number: '5+', label: 'Projects Completed' },
-    { number: '5+', label: 'Happy Clients' },
+    { number: '10+', label: 'Projects Completed' },
+    { number: '10+', label: 'Happy Clients' },
     { number: '2+', label: 'Years Experience' },
   ];
 
@@ -60,117 +60,74 @@ export default function About() {
     <section
       id="about"
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-white overflow-hidden"
+      className="relative py-24 sm:py-32 bg-[#05070f] overflow-hidden"
     >
-      {/* Decorative Line */}
-      <svg
-        className="absolute top-0 left-0 w-full h-full pointer-events-none"
-        style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 1s ease' }}
-      >
-        <path
-          d="M 0 200 Q 400 100 800 300 T 1600 200"
-          fill="none"
-          stroke="url(#gradient)"
-          strokeWidth="1"
-          strokeDasharray="1000"
-          strokeDashoffset={isVisible ? 0 : 1000}
-          style={{ transition: 'stroke-dashoffset 2s ease 1s' }}
-        />
-        <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#0e43a6" stopOpacity="0" />
-            <stop offset="50%" stopColor="#0e43a6" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#0e43a6" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-      </svg>
+      {/* Futuristic Background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_top_right,_rgba(59,130,246,0.12),_transparent_25%),radial-gradient(circle_at_bottom_right,_rgba(59,130,246,0.12),_transparent_25%)]" />
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Title */}
-        <div className="mb-16">
+      <div className="relative max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-16 max-w-3xl">
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 text-sm uppercase tracking-[0.35em] text-cyan-300 font-medium ring-1 ring-cyan-300/20">
+            About Innoventix
+          </span>
           <h2
-            className={`font-display text-4xl sm:text-5xl font-bold text-black mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
-              }`}
+            className={`font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-white mt-6 tracking-tight transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-6'
+            }`}
             style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
-            About Us
+            Building future-ready products for enterprise growth.
           </h2>
-          <div
-            className={`w-24 h-1 bg-gradient-brand rounded-full transition-all duration-500 ${isVisible ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
-              }`}
-            style={{
-              transitionTimingFunction: 'var(--ease-expo-out)',
-              transitionDelay: '400ms',
-              transformOrigin: 'left'
-            }}
-          />
+          <p
+            className={`mt-6 text-lg text-slate-300 leading-relaxed transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+            }`}
+            style={{ transitionTimingFunction: 'var(--ease-smooth)', transitionDelay: '150ms' }}
+          >
+            We are eight focused software specialists delivering scalable digital platforms with a strategic, polished approach. Our experience spans startups, enterprise workflows and product launches built for reliability and velocity.
+          </p>
         </div>
 
-        {/* Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Text Content */}
-          <div>
-            <p
-              className={`text-lg text-gray-600 leading-relaxed mb-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-                }`}
-              style={{
-                transitionTimingFunction: 'var(--ease-smooth)',
-                transitionDelay: '300ms'
-              }}
-            >
-              We are a group of eight experienced software developers with more than 2 years of experience
-              in building and freelancing real-world projects. We build scalable and user-friendly products
-              that help businesses grow faster.
-            </p>
-            <p
-              className={`text-lg text-gray-600 leading-relaxed mb-10 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
-                }`}
-              style={{
-                transitionTimingFunction: 'var(--ease-smooth)',
-                transitionDelay: '450ms'
-              }}
-            >
-              Our services include Web Development, App Development, Custom Software, Admin Panels,
-              UI/UX Design, and 3D Design. We combine technical expertise with creative innovation
-              to deliver exceptional digital solutions.
-            </p>
+        <div className="grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-20 items-start">
+          <div className="space-y-8">
+            <div className={`rounded-3xl border border-slate-800/90 bg-slate-900/90 p-8 shadow-[0_25px_100px_-60px_rgba(15,23,42,0.85)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}>
+              <p className="text-slate-300 leading-8 text-lg">
+                We design polished digital experiences for investors, executives and end users. Our projects include custom web platforms, secure admin systems, intelligent mobile apps and 3D-informed interfaces that feel premium and intuitive.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2 mt-6 text-sm text-slate-300">
+                <div className="rounded-2xl border border-slate-800/90 bg-slate-950/80 p-4">
+                  <p className="font-semibold text-white">Strategic engineering</p>
+                  <p className="mt-2 text-slate-400">Architected for scale, performance, and enterprise readiness.</p>
+                </div>
+                <div className="rounded-2xl border border-slate-800/90 bg-slate-950/80 p-4">
+                  <p className="font-semibold text-white">Product-focused delivery</p>
+                  <p className="mt-2 text-slate-400">From UX to deployment, every detail is designed to drive business outcomes.</p>
+                </div>
+              </div>
+            </div>
 
-            {/* CTA Button */}
-            <div
-              className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-              style={{
-                transitionTimingFunction: 'var(--ease-expo-out)',
-                transitionDelay: '600ms'
-              }}
-            >
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  document.querySelector('#services')?.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="inline-flex items-center gap-2 text-[#0e43a6] font-semibold hover:gap-4 transition-all duration-300 group"
-              >
-                Learn More
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-              </a>
+            <div className={`rounded-3xl border border-slate-800/90 bg-slate-900/90 p-8 shadow-[0_25px_100px_-60px_rgba(15,23,42,0.85)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`} style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '150ms' }}>
+              <h3 className="text-white text-xl font-semibold mb-4">Core capabilities</h3>
+              <ul className="space-y-3 text-slate-300 text-sm">
+                <li>• Full-stack web and mobile platforms</li>
+                <li>• High-performance admin systems</li>
+                <li>• UX-led interfaces and branded visual design</li>
+                <li>• Secure, scalable cloud-ready architectures</li>
+              </ul>
             </div>
           </div>
 
-          {/* Stats Orbs */}
-          <div className="flex flex-wrap justify-center lg:justify-end gap-6 sm:gap-8">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
             {stats.map((stat, index) => (
               <div
                 key={stat.label}
-                className={index === 1 ? 'lg:mt-12' : ''}
+                className={`rounded-3xl border border-cyan-400/10 bg-slate-900/90 p-8 shadow-[0_20px_80px_-50px_rgba(6,182,212,0.35)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: `${300 + index * 120}ms` }}
               >
-                <StatOrb
-                  number={stat.number}
-                  label={stat.label}
-                  delay={500 + index * 150}
-                  isVisible={isVisible}
-                />
+                <span className="text-4xl font-display font-bold text-white">{stat.number}</span>
+                <p className="mt-4 text-slate-300 text-sm leading-6">{stat.label}</p>
               </div>
             ))}
           </div>

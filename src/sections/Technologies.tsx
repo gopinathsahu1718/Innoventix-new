@@ -7,17 +7,16 @@ interface Tech {
 }
 
 const technologies: Tech[] = [
-  { name: 'HTML5', icon: 'M0 32L16 32L16 160L0 160L0 32ZM32 32L48 32L48 160L32 160L32 32ZM64 32L80 32L80 160L64 160L64 32ZM96 32L112 32L112 160L96 160L96 32ZM128 32L144 32L144 160L128 160L128 32ZM160 32L176 32L176 160L160 160L160 32ZM192 32L208 32L208 160L192 160L192 32ZM224 32L240 32L240 160L224 160L224 32Z', color: '#E34F26' },
-  { name: 'CSS3', icon: 'M0 32L16 32L16 160L0 160L0 32ZM32 32L48 32L48 160L32 160L32 32ZM64 32L80 32L80 160L64 160L64 32ZM96 32L112 32L112 160L96 160L96 32ZM128 32L144 32L144 160L128 160L128 32ZM160 32L176 32L176 160L160 160L160 32ZM192 32L208 32L208 160L192 160L192 32ZM224 32L240 32L240 160L224 160L224 32Z', color: '#1572B6' },
-  { name: 'JavaScript', icon: 'M0 32L16 32L16 160L0 160L0 32ZM32 32L48 32L48 160L32 160L32 32ZM64 32L80 32L80 160L64 160L64 32ZM96 32L112 32L112 160L96 160L96 32ZM128 32L144 32L144 160L128 160L128 32ZM160 32L176 32L176 160L160 160L160 32ZM192 32L208 32L208 160L192 160L192 32ZM224 32L240 32L240 160L224 160L224 32Z', color: '#F7DF1E' },
-  { name: 'React', icon: 'M128 80C105.9 80 88 97.9 88 120C88 142.1 105.9 160 128 160C150.1 160 168 142.1 168 120C168 97.9 150.1 80 128 80ZM128 140C117 140 108 131 108 120C108 109 117 100 128 100C139 100 148 109 148 120C148 131 139 140 128 140Z', color: '#61DAFB' },
-  { name: 'Tailwind', icon: 'M128 64C96 64 80 80 72 96C64 112 64 128 64 128C64 128 64 96 96 80C128 64 160 80 160 80C160 80 144 64 128 64ZM128 96C96 96 80 112 72 128C64 144 64 160 64 160C64 160 64 128 96 112C128 96 160 112 160 112C160 112 144 96 128 96Z', color: '#06B6D4' },
-  { name: 'Node.js', icon: 'M128 32L32 88L32 168L128 224L224 168L224 88L128 32ZM128 192L64 156L64 100L128 64L192 100L192 156L128 192Z', color: '#339933' },
-  { name: 'Express', icon: 'M64 128L96 96L128 128L160 96L192 128', color: '#000000' },
-  { name: 'MongoDB', icon: 'M128 32C128 32 96 64 96 120C96 176 128 208 128 208C128 208 160 176 160 120C160 64 128 32 128 32Z', color: '#47A248' },
+  { name: 'HTML5', icon: '', color: '#E34F26' },
+  { name: 'CSS3', icon: '', color: '#1572B6' },
+  { name: 'JavaScript', icon: '', color: '#F7DF1E' },
+  { name: 'React', icon: '', color: '#61DAFB' },
+  { name: 'Tailwind', icon: '', color: '#06B6D4' },
+  { name: 'Node.js', icon: '', color: '#339933' },
+  { name: 'Express', icon: '', color: '#000000' },
+  { name: 'MongoDB', icon: '', color: '#47A248' },
 ];
 
-// SVG Icons for each technology
 const TechIcon = ({ tech, isHovered }: { tech: Tech; isHovered: boolean }) => {
   const icons: Record<string, React.ReactElement> = {
     'HTML5': (
@@ -39,7 +38,7 @@ const TechIcon = ({ tech, isHovered }: { tech: Tech; isHovered: boolean }) => {
     'React': (
       <svg viewBox="0 0 841.9 595.3" className="w-full h-full">
         <g fill="#61DAFB">
-          <path d="M666.3,296.5c0-32.5-40.7-63.3-103.1-82.4c14.4-63.6,8-114.2-20.2-130.4c-6.5-3.8-14.1-5.6-22.4-5.6v22.3c4.6,0,8.3,0.9,11.4,2.6c13.6,7.8,19.5,37.5,14.9,75.7c-1.1,9.4-2.9,19.3-5.1,29.4c-19.6-4.8-41-8.5-63.5-10.9c-13.5-18.5-27.5-35.3-41.6-50c32.6-30.3,63.2-46.9,84-46.9l0-22.3c0,0,0,0,0,0c-27.5,0-63.5,19.6-99.9,53.6c-36.4-33.8-72.4-53.2-99.9-53.2v22.3c20.7,0,51.4,16.5,84,46.6c-14,14.7-28,31.4-41.3,49.9c-22.6,2.4-44,6.1-63.6,11c-2.3-10-4-19.7-5.2-29c-4.7-38.2,1.1-67.9,14.6-75.8c3-1.8,6.9-2.6,11.5-2.6l0-22.3c0,0,0,0,0,0c-8.4,0-16,1.8-22.6,5.6c-28.1,16.2-34.4,66.7-19.9,130.1c-62.2,19.2-102.7,49.9-102.7,82.3c0,32.5,40.7,63.3,103.1,82.4c-14.4,63.6-8,114.2,20.2,130.4c6.5,3.8,14.1,5.6,22.5,5.6c27.5,0,63.5-19.6,99.9-53.6c36.4,33.8,72.4,53.2,99.9,53.2c8.4,0,16-1.8,22.6-5.6c28.1-16.2,34.4-66.7,19.9-130.1C625.8,359.7,666.3,329,666.3,296.5z M536.1,229.8c-3.7,12.9-8.3,26.2-13.5,39.5c-4.1-8-8.4-16-13.1-24c-4.6-8-9.5-15.8-14.4-23.4C509.3,224,523,226.6,536.1,229.8z M490.3,336.3c-7.8,13.5-15.8,26.3-24.1,38.2c-14.9,1.3-30,2-45.2,2c-15.1,0-30.2-0.7-45-1.9c-8.3-11.9-16.4-24.6-24.2-38c-7.6-13.1-14.5-26.4-20.8-39.8c6.2-13.4,13.2-26.8,20.7-39.9c7.8-13.5,15.8-26.3,24.1-38.2c14.9-1.3,30-2,45.2-2c15.1,0,30.2,0.7,45,1.9c8.3,11.9,16.4,24.6,24.2,38c7.6,13.1,14.5,26.4,20.8,39.8C504.7,309.8,497.8,323.2,490.3,336.3z M522.6,323.3c5.4,13.4,10,26.8,13.8,39.8c-13.1,3.2-26.9,5.9-41.2,8c4.9-7.7,9.8-15.6,14.4-23.7C514.2,339.4,518.5,331.3,522.6,323.3z M421.2,430c-9.3-9.6-18.6-20.3-27.8-32c9,0.4,18.2,0.7,27.5,0.7c9.4,0,18.7-0.2,27.8-0.7C439.7,409.7,430.4,420.4,421.2,430z M346.8,371.1c-14.2-2.1-27.9-4.7-41-7.9c3.7-12.9,8.3-26.2,13.5-39.5c4.1,8,8.4,16,13.1,24C337.1,355.7,341.9,363.5,346.8,371.1z M420.7,163c9.3,9.6,18.6,20.3,27.8,32c-9-0.4-18.2-0.7-27.5-0.7c-9.4,0-18.7,0.2-27.8,0.7C402.2,183.3,411.5,172.6,420.7,163z M346.7,221.9c-4.9,7.7-9.8,15.6-14.4,23.7c-4.6,8-8.9,16-13,24c-5.4-13.4-10-26.8-13.8-39.8C318.6,226.7,332.4,224,346.7,221.9z M256.2,347.1c-35.4-15.1-58.3-34.9-58.3-50.6c0-15.7,22.9-35.6,58.3-50.6c8.6-3.7,18-7,27.7-10.1c5.7,19.6,13.2,40,22.5,60.9c-9.2,20.8-16.6,41.1-22.2,60.6C274.3,354.2,264.9,350.8,256.2,347.1z M421.2,430c-9.3-9.6-18.6-20.3-27.8-32c9,0.4,18.2,0.7,27.5,0.7c9.4,0,18.7-0.2,27.8-0.7C439.7,409.7,430.4,420.4,421.2,430z M421.2,162.9c9.3-9.6,18.6-20.3,27.8-32c-9,0.4-18.2,0.7-27.5,0.7c-9.4,0-18.7-0.2-27.8-0.7C402.2,142.7,411.5,153.4,421.2,162.9z M585.7,296.5c0,15.7-22.9,35.6-58.3,50.6c-8.6,3.7-18,7-27.7,10.1c-5.7-19.6-13.2-40-22.5-60.9c9.2-20.8,16.6-41.1,22.2-60.6c9.9,3.1,20.3,6.5,29.8,10.1C562.7,260.9,585.7,280.8,585.7,296.5z"/>
+          <path d="M666.3,296.5c0-32.5-40.7-63.3-103.1-82.4c14.4-63.6,8-114.2-20.2-130.4c-6.5-3.8-14.1-5.6-22.4-5.6v22.3c4.6,0,8.3,0.9,11.4,2.6c13.6,7.8,19.5,37.5,14.9,75.7c-1.1,9.4-2.9,19.3-5.1,29.4c-19.6-4.8-41-8.5-63.5-10.9c-13.5-18.5-27.5-35.3-41.6-50c32.6-30.3,63.2-46.9,84-46.9l0-22.3c0,0,0,0,0,0c-27.5,0-63.5,19.6-99.9,53.6c-36.4-33.8-72.4-53.2-99.9-53.2v22.3c20.7,0,51.4,16.5,84,46.6c-14,14.7-28,31.4-41.3,49.9c-22.6,2.4-44,6.1-63.6,11c-2.3-10-4-19.7-5.2-29c-4.7-38.2,1.1-67.9,14.6-75.8c3-1.8,6.9-2.6,11.5-2.6l0-22.3c0,0,0,0,0,0c-8.4,0-16,1.8-22.6,5.6c-28.1,16.2-34.4,66.7-19.9,130.1c-62.2,19.2-102.7,49.9-102.7,82.3c0,32.5,40.7,63.3,103.1,82.4c-14.4,63.6-8,114.2,20.2,130.4c6.5,3.8,14.1,5.6,22.5,5.6c27.5,0,63.5-19.6,99.9-53.6c36.4,33.8,72.4,53.2,99.9,53.2c8.4,0,16-1.8,22.6-5.6c28.1-16.2,34.4-66.7,19.9-130.1C625.8,359.7,666.3,329,666.3,296.5z M536.1,229.8c-3.7,12.9-8.3,26.2-13.5,39.5c-4.1-8-8.4-16-13.1-24c-4.6-8-9.5-15.8-14.4-23.4C509.3,224,523,226.6,536.1,229.8z M490.3,336.3c-7.8,13.5-15.8,26.3-24.1,38.2c-14.9,1.3-30,2-45.2,2c-15.1,0-30.2-0.7-45-1.9c-8.3-11.9-16.4-24.6-24.2-38c-7.6-13.1-14.5-26.4-20.8-39.8c6.2-13.4,13.2-26.8,20.7-39.9c7.8-13.5,15.8-26.3,24.1-38.2c14.9-1.3,30-2,45.2-2c15.1,0,30.2,0.7,45,1.9c8.3,11.9,16.4,24.6,24.2,38c7.6,13.1,14.5,26.4,20.8,39.8C504.7,309.8,497.8,323.2,490.3,336.3z M522.6,323.3c5.4,13.4,10,26.8,13.8,39.8c-13.1,3.2-26.9,5.9-41.2,8c4.9-7.7,9.8-15.6,14.4-23.7C514.2,339.4,518.5,331.3,522.6,323.3z M421.2,430c-9.3-9.6-18.6-20.3-27.8-32c9,0.4,18.2,0.7,27.5,0.7c9.4,0,18.7-0.2,27.8-0.7C439.7,409.7,430.4,420.4,421.2,430z M346.8,371.1c-14.2-2.1-27.9-4.7-41-7.9c3.7-12.9,8.3-26.2,13.5-39.5c4.1,8,8.4,16,13.1,24C337.1,355.7,341.9,363.5,346.8,371.1z M420.7,163c9.3,9.6,18.6,20.3,27.8,32c-9-0.4-18.2-0.7-27.5-0.7c-9.4,0-18.7,0.2-27.8,0.7C402.2,183.3,411.5,172.6,420.7,163z M346.7,221.9c-4.9,7.7-9.8,15.6-14.4,23.7c-4.6,8-8.9,16-13,24c-5.4-13.4-10-26.8-13.8-39.8C318.6,226.7,332.4,224,346.7,221.9z M256.2,347.1c-35.4-15.1-58.3-34.9-58.3-50.6c0-15.7,22.9-35.6,58.3-50.6c8.6-3.7,18-7,27.7-10.1c5.7,19.6,13.2,40,22.5,60.9c-9.2,20.8-16.6,41.1-22.2,60.6C274.3,354.2,264.9,350.8,256.2,347.1z M585.7,296.5c0,15.7-22.9,35.6-58.3,50.6c-8.6,3.7-18,7-27.7,10.1c-5.7-19.6-13.2-40-22.5-60.9c9.2-20.8,16.6-41.1,22.2-60.6c9.9,3.1,20.3,6.5,29.8,10.1C562.7,260.9,585.7,280.8,585.7,296.5z"/>
           <circle cx="420.9" cy="296.5" r="45.7"/>
         </g>
       </svg>
@@ -67,7 +66,7 @@ const TechIcon = ({ tech, isHovered }: { tech: Tech; isHovered: boolean }) => {
   };
 
   return (
-    <div 
+    <div
       className={`w-16 h-16 transition-all duration-300 ${isHovered ? 'scale-110' : 'scale-100'}`}
       style={{ filter: isHovered ? `drop-shadow(0 0 20px ${tech.color}40)` : 'none' }}
     >
@@ -91,11 +90,7 @@ export default function Technologies() {
       },
       { threshold: 0.2 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -103,94 +98,124 @@ export default function Technologies() {
     <section
       id="tech"
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-white overflow-hidden"
+      className="relative overflow-hidden bg-white py-24 sm:py-32"
     >
-      {/* Orbital Rings */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div 
-          className={`w-[600px] h-[600px] rounded-full border border-dashed border-[#0e43a6]/20 animate-spin-slow transition-all duration-1000 ${
-            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-          }`}
-          style={{ transitionTimingFunction: 'var(--ease-elastic)', transitionDelay: '300ms' }}
-        />
-        <div 
-          className={`absolute w-[400px] h-[400px] rounded-full border border-dashed border-[#06b6d4]/20 animate-spin-slower transition-all duration-1000 ${
-            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-          }`}
-          style={{ transitionTimingFunction: 'var(--ease-elastic)', transitionDelay: '450ms' }}
-        />
-      </div>
+      {/* Background accents */}
+      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-slate-50 to-white pointer-events-none" />
+      <div className="absolute -right-16 top-12 h-72 w-72 rounded-full bg-cyan-100/30 blur-3xl pointer-events-none" />
+      <div className="absolute left-8 bottom-10 h-52 w-52 rounded-full bg-sky-100/30 blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2
-            className={`font-display text-4xl sm:text-5xl font-bold text-black mb-4 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
+      <div className="relative mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] items-start">
+
+          {/* ── Left: heading + two info cards ── */}
+          <div className="space-y-8">
+            <div
+              className={`inline-flex items-center gap-2 rounded-full border border-sky-200/70 bg-sky-50/70 px-4 py-2 text-xs uppercase tracking-[0.36em] text-sky-700 shadow-[0_0_40px_rgba(56,189,248,0.08)] backdrop-blur-sm transition-all duration-700 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
+            >
+              <span className="h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
+              Team Expertise
+            </div>
+
+            <div>
+              <h2
+                className={`font-display text-4xl sm:text-5xl font-semibold tracking-tight text-slate-900 transition-all duration-700 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
+                }`}
+                style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '200ms' }}
+              >
+                Modern technology design for a premium enterprise experience.
+              </h2>
+              <p
+                className={`mt-6 max-w-2xl text-lg leading-8 text-slate-600 transition-all duration-700 ${
+                  isVisible ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
+                }`}
+                style={{ transitionTimingFunction: 'var(--ease-smooth)', transitionDelay: '350ms' }}
+              >
+                A modern, closed-layout section with clean glass surfaces, bold white space, and crisp cyan accents to match the hero's futuristic identity.
+              </p>
+            </div>
+
+          </div>
+
+          {/* ── Right: feature chips 2×2 + stat strip 3-col ── */}
+          <div
+            className={`relative overflow-hidden rounded-[2rem] border border-slate-200/70 bg-slate-50/90 p-8 shadow-[0_30px_90px_rgba(15,23,42,0.06)] transition-all duration-700 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
-            style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
+            style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '250ms' }}
           >
-            Technologies
-          </h2>
-          <p
-            className={`font-accent text-sm uppercase tracking-[0.15em] text-gray-500 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '150ms' }}
-          >
-            Team Expertise
-          </p>
+            {/* Top glow line — matches Hero feature card */}
+            <div className="absolute inset-x-8 top-0 h-px rounded-full bg-gradient-to-r from-cyan-400/70 via-sky-400/50 to-indigo-400/50" />
+
+            <div className="relative space-y-5">
+              {/* Trusted stack + Futuristic polish cards */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="rounded-3xl border border-slate-200/70 bg-slate-50/90 p-6 shadow-[0_24px_80px_rgba(15,23,42,0.06)] backdrop-blur-xl">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Trusted stack</p>
+                  <p className="mt-4 text-xl font-semibold text-slate-900">Engineered for speed, security, and scale.</p>
+                </div>
+                <div className="rounded-3xl border border-slate-200/70 bg-white/95 p-6 shadow-[0_24px_80px_rgba(56,189,248,0.08)] backdrop-blur-xl">
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Futuristic polish</p>
+                  <p className="mt-4 text-xl font-semibold text-slate-900">Glass-inspired cards and ambient glow details.</p>
+                </div>
+              </div>
+
+              {/* 3-col stat strip */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { highlight: 'Performance', description: 'Optimised at every layer' },
+                  { highlight: 'Scale',        description: 'Global-ready infra'       },
+                  { highlight: 'Trust',        description: 'Security by default'      },
+                ].map((item) => (
+                  <div
+                    key={item.highlight}
+                    className="rounded-2xl bg-white/80 border border-slate-100 p-3 text-xs text-slate-500"
+                  >
+                    <p className="font-semibold text-slate-900 text-sm">{item.highlight}</p>
+                    <p className="mt-1 text-slate-400 text-xs">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Tech Grid */}
-        <div className="flex flex-wrap justify-center gap-8 sm:gap-12 lg:gap-16">
+        {/* ── Tech card grid ── */}
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {technologies.map((tech, index) => (
-            <div
+            <button
               key={tech.name}
-              className={`flex flex-col items-center gap-4 transition-all duration-500 ${
-                isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
-              }`}
-              style={{
-                transitionTimingFunction: 'var(--ease-elastic)',
-                transitionDelay: `${500 + index * 80}ms`,
-              }}
+              type="button"
               onMouseEnter={() => setHoveredTech(tech.name)}
               onMouseLeave={() => setHoveredTech(null)}
+              className={`group relative overflow-hidden rounded-[2rem] border bg-white/95 p-6 text-left shadow-[0_20px_60px_rgba(15,23,42,0.07)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_30px_90px_rgba(15,23,42,0.10)] ${
+                hoveredTech === tech.name ? 'border-cyan-300/80' : 'border-slate-200/70'
+              }`}
+              style={{
+                opacity: isVisible ? 1 : 0,
+                transitionTimingFunction: 'var(--ease-expo-out)',
+                transitionDelay: `${500 + index * 70}ms`,
+              }}
             >
-              <div 
-                className={`relative p-6 rounded-2xl bg-gray-50 hover:bg-white hover:shadow-xl transition-all duration-300 cursor-pointer group ${
-                  hoveredTech === tech.name ? 'shadow-xl' : ''
+              <div
+                className={`absolute -right-10 -top-10 h-28 w-28 rounded-full bg-cyan-100/40 blur-3xl pointer-events-none transition-opacity duration-500 ${
+                  hoveredTech === tech.name ? 'opacity-100' : 'opacity-60'
                 }`}
-                style={{
-                  transform: hoveredTech === tech.name ? 'translateY(-8px) rotate(360deg)' : 'translateY(0) rotate(0deg)',
-                  transition: 'transform 0.6s var(--ease-expo-out), box-shadow 0.3s ease, background-color 0.3s ease',
-                }}
-              >
-                <TechIcon tech={tech} isHovered={hoveredTech === tech.name} />
-                
-                {/* Glow effect */}
-                <div 
-                  className={`absolute inset-0 rounded-2xl transition-opacity duration-300 -z-10 ${
-                    hoveredTech === tech.name ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  style={{
-                    background: `radial-gradient(circle at center, ${tech.color}20 0%, transparent 70%)`,
-                  }}
-                />
+              />
+              <div className="relative flex items-center gap-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-3xl border border-slate-200/70 bg-slate-50 shadow-sm transition-all duration-300 group-hover:bg-cyan-50">
+                  <TechIcon tech={tech} isHovered={hoveredTech === tech.name} />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-base font-semibold text-slate-900">{tech.name}</p>
+                  <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Leading edge</p>
+                </div>
               </div>
-              
-              <span 
-                className={`text-sm font-medium transition-all duration-300 ${
-                  hoveredTech === tech.name ? 'text-[#0e43a6]' : 'text-gray-600'
-                }`}
-                style={{
-                  opacity: hoveredTech === tech.name ? 1 : 0.7,
-                  transform: hoveredTech === tech.name ? 'translateY(0)' : 'translateY(4px)',
-                }}
-              >
-                {tech.name}
-              </span>
-            </div>
+            </button>
           ))}
         </div>
       </div>
