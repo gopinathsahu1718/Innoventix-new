@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
 
 interface Project {
   number: string;
@@ -73,7 +73,6 @@ export default function Projects() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [direction, setDirection] = useState<'next' | 'prev'>('next');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -89,16 +88,15 @@ export default function Projects() {
     return () => observer.disconnect();
   }, []);
 
-  const goToSlide = (index: number, dir: 'next' | 'prev' = 'next') => {
+  const goToSlide = (index: number) => {
     if (isAnimating) return;
-    setDirection(dir);
     setIsAnimating(true);
     setActiveIndex(index);
     setTimeout(() => setIsAnimating(false), 600);
   };
 
-  const nextSlide = () => goToSlide((activeIndex + 1) % projects.length, 'next');
-  const prevSlide = () => goToSlide((activeIndex - 1 + projects.length) % projects.length, 'prev');
+  const nextSlide = () => goToSlide((activeIndex + 1) % projects.length);
+  const prevSlide = () => goToSlide((activeIndex - 1 + projects.length) % projects.length);
 
   const active = projects[activeIndex];
 
@@ -108,7 +106,7 @@ export default function Projects() {
       ref={sectionRef}
       className="relative py-24 sm:py-32 bg-[#05070f] overflow-hidden"
     >
-      {/* ── Atmosphere ── */}
+      {/* Atmosphere effects */}
       <div
         className="pointer-events-none absolute transition-all duration-1000"
         style={{
@@ -129,54 +127,38 @@ export default function Projects() {
           filter: 'blur(60px)',
         }}
       />
-      {/* Radial centre overlay */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_50%,rgba(14,165,233,0.04),transparent)]" />
 
-      {/* Subtle grid texture */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.025]"
-        style={{
-          backgroundImage: `linear-gradient(rgba(148,163,184,0.5) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(148,163,184,0.5) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
-        }}
-      />
-
       <div className="relative max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* ── Section header ── */}
+        {/* Section header */}
         <div className="flex items-end justify-between mb-14 sm:mb-18">
           <div>
             <div
-              className={`inline-flex items-center gap-2.5 rounded-full border border-sky-500/30 bg-slate-900/50 px-5 py-2 text-xs uppercase tracking-[0.4em] text-sky-200/80 shadow-[0_0_40px_rgba(56,189,248,0.10)] backdrop-blur-sm transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
+              className={`inline-flex items-center gap-2.5 rounded-full border border-sky-500/30 bg-slate-900/50 px-5 py-2 text-xs uppercase tracking-[0.4em] text-sky-200/80 shadow-[0_0_40px_rgba(56,189,248,0.10)] backdrop-blur-sm transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`}
               style={{ transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)' }}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
               Our Works
             </div>
             <h2
-              className={`mt-5 font-bold text-4xl sm:text-5xl text-white tracking-tight transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
-              }`}
+              className={`mt-5 font-bold text-4xl sm:text-5xl text-white tracking-tight transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+                }`}
               style={{ transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)', transitionDelay: '150ms' }}
             >
               Featured{' '}
               <span
                 className="bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${active.accentColor}, #818cf8)`, transition: 'background-image 0.6s ease' }}
+                style={{ backgroundImage: `linear-gradient(135deg, ${active.accentColor}, #818cf8)` }}
               >
                 Projects
               </span>
             </h2>
           </div>
 
-          {/* Counter */}
           <div
-            className={`hidden sm:flex items-baseline gap-1 transition-all duration-700 ${
-              isVisible ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`hidden sm:flex items-baseline gap-1 transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'
+              }`}
             style={{ transitionDelay: '300ms' }}
           >
             <span
@@ -189,25 +171,13 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* ── Main card ── */}
+        {/* Main Project Card */}
         <div
-          className={`transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-          }`}
+          className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}
           style={{ transitionDelay: '250ms', transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)' }}
         >
-          {/* Outer shell — border + shadow only, no overflow clip so slides can translate */}
-          <div
-            className="relative rounded-[2rem] border border-slate-700/60 shadow-[0_50px_120px_-30px_rgba(0,0,0,0.8)]"
-            style={{ minHeight: 480 }}
-          >
-            {/* Top accent glow line — driven by active, sits above the clip */}
-            <div
-              className="absolute inset-x-0 top-0 h-px rounded-t-[2rem] z-20 transition-all duration-700 pointer-events-none"
-              style={{ background: `linear-gradient(90deg, transparent, ${active.accentColor}90, transparent)` }}
-            />
-
-            {/* Slide strip — overflow-hidden here so each slide clips correctly */}
+          <div className="relative rounded-[2rem] border border-slate-700/60 shadow-[0_50px_120px_-30px_rgba(0,0,0,0.8)]" style={{ minHeight: 480 }}>
             <div className="overflow-hidden rounded-[2rem]">
               <div
                 className="flex transition-transform duration-500"
@@ -218,12 +188,8 @@ export default function Projects() {
               >
                 {projects.map((project) => (
                   <div key={project.number} className="w-full flex-shrink-0">
-                    {/* Each slide is self-contained — ghost number uses THIS project's colours */}
-                    <div
-                      className="relative bg-slate-950/70 backdrop-blur-xl"
-                      style={{ minHeight: 480 }}
-                    >
-                      {/* Ghost number — inside the slide, always correct colour */}
+                    <div className="relative bg-slate-950/70 backdrop-blur-xl" style={{ minHeight: 480 }}>
+                      {/* Ghost number */}
                       <div
                         className="pointer-events-none absolute -top-8 -left-4 font-bold select-none"
                         style={{
@@ -238,24 +204,16 @@ export default function Projects() {
                         {project.number}
                       </div>
 
-                      {/* Split layout */}
                       <div className="relative grid lg:grid-cols-[1fr_380px] min-h-[480px]">
-
-                        {/* Left — main content */}
+                        {/* Left Content */}
                         <div className="flex flex-col justify-between p-8 sm:p-12 lg:p-14">
-
-                          {/* Category + year */}
                           <div className="flex items-center justify-between mb-8">
-                            <span
-                              className="text-xs uppercase tracking-[0.35em] font-medium"
-                              style={{ color: project.accentColor }}
-                            >
+                            <span className="text-xs uppercase tracking-[0.35em] font-medium" style={{ color: project.accentColor }}>
                               {project.category}
                             </span>
                             <span className="text-xs text-slate-600 tracking-widest">{project.year}</span>
                           </div>
 
-                          {/* Title + description + tags */}
                           <div className="space-y-5 flex-1 flex flex-col justify-center">
                             <h3 className="font-bold text-3xl sm:text-4xl lg:text-5xl text-white leading-tight tracking-tight">
                               {project.title}
@@ -280,7 +238,6 @@ export default function Projects() {
                             </div>
                           </div>
 
-                          {/* CTA */}
                           <div className="mt-10">
                             <button
                               className="group inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold text-white border transition-all duration-300 hover:-translate-y-0.5"
@@ -296,45 +253,28 @@ export default function Projects() {
                           </div>
                         </div>
 
-                        {/* Right — metadata panel */}
-                        <div
-                          className="relative flex flex-col justify-between border-t lg:border-t-0 lg:border-l p-8 sm:p-10 lg:p-12"
-                          style={{ borderColor: 'rgba(148,163,184,0.08)' }}
-                        >
-                          {/* Vertical accent bar */}
-                          <div
-                            className="hidden lg:block absolute left-0 top-12 bottom-12 w-px"
-                            style={{ background: `linear-gradient(to bottom, transparent, ${project.accentColor}50, transparent)` }}
-                          />
-
-                          {/* Stats */}
+                        {/* Right Panel */}
+                        <div className="relative flex flex-col justify-between border-t lg:border-t-0 lg:border-l p-8 sm:p-10 lg:p-12" style={{ borderColor: 'rgba(148,163,184,0.08)' }}>
                           <div className="space-y-7">
                             <p className="text-xs uppercase tracking-[0.35em] text-slate-600">Project details</p>
-                            {project.stats.map((stat, i) => (
+                            {project.stats.map((stat) => (
                               <div key={stat.label} className="space-y-1">
                                 <p className="text-xs text-slate-600 uppercase tracking-widest">{stat.label}</p>
                                 <p className="text-base font-semibold text-white">{stat.value}</p>
-                                <div
-                                  className="h-px mt-2 rounded-full"
-                                  style={{ background: `linear-gradient(90deg, ${project.accentColor}40, transparent)` }}
-                                />
+                                <div className="h-px mt-2 rounded-full" style={{ background: `linear-gradient(90deg, ${project.accentColor}40, transparent)` }} />
                               </div>
                             ))}
                           </div>
 
-                          {/* Mini project nav */}
                           <div className="mt-10 space-y-3">
                             <p className="text-xs uppercase tracking-[0.35em] text-slate-600 mb-4">All projects</p>
                             {projects.map((p, i) => (
                               <button
                                 key={p.number}
-                                onClick={() => goToSlide(i, i > activeIndex ? 'next' : 'prev')}
+                                onClick={() => goToSlide(i)}
                                 className="w-full flex items-center gap-3"
                               >
-                                <span
-                                  className="text-xs font-mono transition-colors duration-300"
-                                  style={{ color: i === activeIndex ? project.accentColor : '#475569' }}
-                                >
+                                <span className="text-xs font-mono transition-colors duration-300" style={{ color: i === activeIndex ? project.accentColor : '#475569' }}>
                                   {p.number}
                                 </span>
                                 <div
@@ -346,10 +286,7 @@ export default function Projects() {
                                     opacity: i === activeIndex ? 1 : 0.5,
                                   }}
                                 />
-                                <span
-                                  className="text-xs font-medium transition-colors duration-300 text-right"
-                                  style={{ color: i === activeIndex ? '#fff' : '#475569' }}
-                                >
+                                <span className="text-xs font-medium transition-colors duration-300 text-right" style={{ color: i === activeIndex ? '#fff' : '#475569' }}>
                                   {p.title.split(' ').slice(0, 2).join(' ')}
                                 </span>
                               </button>
@@ -358,13 +295,7 @@ export default function Projects() {
                         </div>
                       </div>
 
-                      {/* Bottom glow per slide */}
-                      <div
-                        className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
-                        style={{
-                          background: `radial-gradient(ellipse at 50% 100%, ${project.gradientTo}20 0%, transparent 70%)`,
-                        }}
-                      />
+                      <div className="absolute inset-x-0 bottom-0 h-32 pointer-events-none" style={{ background: `radial-gradient(ellipse at 50% 100%, ${project.gradientTo}20 0%, transparent 70%)` }} />
                     </div>
                   </div>
                 ))}
@@ -373,42 +304,20 @@ export default function Projects() {
           </div>
         </div>
 
-        {/* ── Navigation bar ── */}
-        <div
-          className={`flex items-center justify-between mt-8 transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}
-          style={{ transitionDelay: '400ms' }}
-        >
-          {/* Prev / Next */}
+        {/* Navigation */}
+        <div className={`flex items-center justify-between mt-8 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '400ms' }}>
           <div className="flex gap-3">
-            <button
-              onClick={prevSlide}
-              disabled={isAnimating}
-              aria-label="Previous project"
-              className="w-12 h-12 rounded-full flex items-center justify-center text-white border border-slate-700/60 bg-slate-900/60 backdrop-blur-sm hover:border-sky-500/50 hover:bg-slate-800/60 transition-all duration-300 disabled:opacity-40"
-            >
+            <button onClick={prevSlide} disabled={isAnimating} className="w-12 h-12 rounded-full flex items-center justify-center text-white border border-slate-700/60 bg-slate-900/60 backdrop-blur-sm hover:border-sky-500/50 hover:bg-slate-800/60 transition-all duration-300 disabled:opacity-40">
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <button
-              onClick={nextSlide}
-              disabled={isAnimating}
-              aria-label="Next project"
-              className="w-12 h-12 rounded-full flex items-center justify-center text-white border border-slate-700/60 bg-slate-900/60 backdrop-blur-sm hover:border-sky-500/50 hover:bg-slate-800/60 transition-all duration-300 disabled:opacity-40"
-            >
+            <button onClick={nextSlide} disabled={isAnimating} className="w-12 h-12 rounded-full flex items-center justify-center text-white border border-slate-700/60 bg-slate-900/60 backdrop-blur-sm hover:border-sky-500/50 hover:bg-slate-800/60 transition-all duration-300 disabled:opacity-40">
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
 
-          {/* Dot indicators */}
           <div className="flex gap-3 items-center">
-            {projects.map((p, i) => (
-              <button
-                key={i}
-                onClick={() => goToSlide(i, i > activeIndex ? 'next' : 'prev')}
-                aria-label={`Go to project ${i + 1}`}
-                className="relative flex items-center justify-center"
-              >
+            {projects.map((_, i) => (
+              <button key={i} onClick={() => goToSlide(i)} className="relative flex items-center justify-center">
                 <span
                   className="block rounded-full transition-all duration-400"
                   style={{
@@ -418,28 +327,22 @@ export default function Projects() {
                   }}
                 />
                 {i === activeIndex && (
-                  <span
-                    className="absolute inset-0 rounded-full animate-ping opacity-30"
-                    style={{ background: active.accentColor }}
-                  />
+                  <span className="absolute inset-0 rounded-full animate-ping opacity-30" style={{ background: active.accentColor }} />
                 )}
               </button>
             ))}
           </div>
 
-          {/* Progress bar */}
           <div className="hidden sm:block w-36 h-px bg-slate-800 rounded-full overflow-hidden">
             <div
               className="h-full rounded-full transition-all duration-500"
               style={{
                 width: `${((activeIndex + 1) / projects.length) * 100}%`,
                 background: `linear-gradient(90deg, ${active.gradientFrom}, ${active.accentColor})`,
-                transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)',
               }}
             />
           </div>
         </div>
-
       </div>
     </section>
   );
