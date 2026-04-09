@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { 
-  Globe, 
-  Smartphone, 
-  Box, 
-  LayoutDashboard, 
-  FileText, 
+import {
+  Globe,
+  Smartphone,
+  Box,
+  LayoutDashboard,
+  FileText,
   Palette,
   ArrowRight,
   Calendar
@@ -92,14 +92,11 @@ function ServiceCard({ service, index, isVisible }: ServiceCardProps) {
   };
 
   const Icon = service.icon;
-  const isOffset = index % 2 === 1;
-
   return (
     <div
       ref={cardRef}
-      className={`relative group transition-all duration-700 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-      } ${isOffset ? 'lg:mt-8' : ''}`}
+      className={`relative group transition-all duration-700 h-full ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+        }`}
       style={{
         transitionTimingFunction: 'var(--ease-expo-out)',
         transitionDelay: `${400 + index * 100}ms`,
@@ -109,9 +106,9 @@ function ServiceCard({ service, index, isVisible }: ServiceCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="relative bg-[#111] border border-white/10 rounded-2xl p-6 sm:p-8 h-full overflow-hidden transition-all duration-300 hover:border-[#3b82f6]/50 hover:shadow-xl hover:shadow-[#0e43a6]/20">
+      <div className="relative bg-[#111] border border-white/10 rounded-2xl p-6 sm:p-8 h-full overflow-hidden transition-all duration-300 hover:border-[#3b82f6]/50 hover:shadow-xl hover:shadow-[#0e43a6]/20 flex flex-col">
         {/* Number Badge */}
-        <span 
+        <span
           className="absolute top-4 right-4 font-accent text-6xl sm:text-7xl font-bold text-gradient opacity-30 group-hover:opacity-50 transition-opacity duration-300"
           style={{ transform: isHovered ? 'scale(1.1) rotate(-5deg)' : 'scale(1) rotate(0deg)', transition: 'transform 0.3s ease' }}
         >
@@ -129,12 +126,12 @@ function ServiceCard({ service, index, isVisible }: ServiceCardProps) {
         <h3 className="font-display text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-gradient transition-all duration-300">
           {service.title}
         </h3>
-        <p className="text-white/60 text-sm leading-relaxed mb-6">
+        <p className="text-white/60 text-sm leading-relaxed mb-6 flex-grow">
           {service.description}
         </p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mt-auto">
           {service.tags.map((tag, tagIndex) => (
             <span
               key={tag}
@@ -147,7 +144,7 @@ function ServiceCard({ service, index, isVisible }: ServiceCardProps) {
         </div>
 
         {/* Hover Glow */}
-        <div 
+        <div
           className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
           style={{
             background: 'radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(14, 67, 166, 0.15) 0%, transparent 50%)',
@@ -194,18 +191,16 @@ export default function Services() {
         {/* Section Header */}
         <div className="text-center mb-16 sm:mb-20">
           <span
-            className={`inline-block font-accent text-sm uppercase tracking-[0.2em] text-[#3b82f6] mb-4 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+            className={`inline-block font-accent text-sm uppercase tracking-[0.2em] text-[#3b82f6] mb-4 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
             style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
             Enterprise Solutions
           </span>
           <h2
-            className={`font-display text-4xl sm:text-5xl font-bold text-white mb-6 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{ 
+            className={`font-display text-4xl sm:text-5xl font-bold text-white mb-6 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
+            style={{
               transitionTimingFunction: 'var(--ease-expo-out)',
               transitionDelay: '200ms'
             }}
@@ -213,10 +208,9 @@ export default function Services() {
             Transform Your Business
           </h2>
           <p
-            className={`text-lg text-white/60 max-w-2xl mx-auto transition-all duration-700 ${
-              isVisible ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
-            }`}
-            style={{ 
+            className={`text-lg text-white/60 max-w-2xl mx-auto transition-all duration-700 ${isVisible ? 'opacity-100 blur-0' : 'opacity-0 blur-sm'
+              }`}
+            style={{
               transitionTimingFunction: 'var(--ease-smooth)',
               transitionDelay: '350ms'
             }}
@@ -226,7 +220,7 @@ export default function Services() {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 items-stretch">
           {services.map((service, index) => (
             <ServiceCard
               key={service.number}
@@ -239,10 +233,9 @@ export default function Services() {
 
         {/* CTA Section */}
         <div
-          className={`text-center transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-          style={{ 
+          className={`text-center transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          style={{
             transitionTimingFunction: 'var(--ease-expo-out)',
             transitionDelay: '1000ms'
           }}

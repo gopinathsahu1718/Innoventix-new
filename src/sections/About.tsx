@@ -118,7 +118,7 @@ export default function About() {
                 transitionDelay: '300ms'
               }}
             >
-              We are a group of fifteen experienced software developers with more than 3 years of experience
+              We are a group of eight experienced software developers with more than 2 years of experience
               in building and freelancing real-world projects. We build scalable and user-friendly products
               that help businesses grow faster.
             </p>
