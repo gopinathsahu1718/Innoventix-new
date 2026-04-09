@@ -253,16 +253,16 @@ export default function Clients() {
             </h2>
           </div>
 
-          <p
+          {/* <p
             className={`text-slate-500 max-w-sm text-sm leading-7 transition-all duration-1000 sm:text-right ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
             style={{ transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)', transitionDelay: '250ms' }}
           >
             Trusted by forward-thinking brands across 45+ countries who believe in bold, scalable digital futures.
-          </p>
+          </p> */}
         </div>
 
         {/* Stats row */}
-        <div
+        {/* <div
           className={`grid grid-cols-3 gap-4 mt-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
           style={{ transitionTimingFunction: 'cubic-bezier(0.16,1,0.3,1)', transitionDelay: '350ms' }}
         >
@@ -293,7 +293,7 @@ export default function Clients() {
               <p className="text-xs text-slate-500 mt-1">{s.label}</p>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
 
       {/* Marquee rows */}

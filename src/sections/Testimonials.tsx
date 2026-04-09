@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Testimonial {
   quote: string;
   author: string;
   role: string;
   company: string;
+  initials: string;
+  accentColor: string;
+  featured?: boolean;
 }
 
 const testimonials: Testimonial[] = [
@@ -14,18 +17,25 @@ const testimonials: Testimonial[] = [
     author: "Healthcare Platform Client",
     role: "Product Owner",
     company: "HearingZen",
+    initials: "HZ",
+    accentColor: "#38bdf8",
+    featured: true,
   },
   {
     quote: "Working with Innoventix was a game-changer for our business. Their technical expertise and attention to detail resulted in a platform that exceeded our expectations.",
     author: "E-commerce Client",
     role: "CEO",
     company: "Kohl",
+    initials: "KH",
+    accentColor: "#22d3ee",
   },
   {
     quote: "The team at Innoventix demonstrated exceptional professionalism throughout our project. They delivered on time and the quality of work was outstanding.",
     author: "Technology Client",
     role: "Founder",
     company: "LogicGo",
+    initials: "LG",
+    accentColor: "#a78bfa",
   },
 ];
 
@@ -34,6 +44,8 @@ export default function Testimonials() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+
+  const active = testimonials[activeIndex];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -45,159 +57,118 @@ export default function Testimonials() {
       },
       { threshold: 0.2 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
 
   const goToSlide = (index: number) => {
-    if (isAnimating) return;
+    if (isAnimating || index === activeIndex) return;
     setIsAnimating(true);
     setActiveIndex(index);
     setTimeout(() => setIsAnimating(false), 500);
   };
 
-  const nextSlide = () => {
-    goToSlide((activeIndex + 1) % testimonials.length);
-  };
-
-  const prevSlide = () => {
-    goToSlide((activeIndex - 1 + testimonials.length) % testimonials.length);
-  };
+  const nextSlide = () => goToSlide((activeIndex + 1) % testimonials.length);
+  const prevSlide = () => goToSlide((activeIndex - 1 + testimonials.length) % testimonials.length);
 
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-gradient-dark overflow-hidden"
+      className="relative py-20 bg-[#05070f] overflow-hidden"
     >
-      {/* Background Decorations */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#0e43a6]/10 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#8b5cf6]/10 rounded-full blur-[150px] pointer-events-none" />
+      {/* Subtle background glow */}
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          background: `radial-gradient(circle at 50% 40%, ${active.accentColor}15, transparent 70%)`,
+        }}
+      />
 
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
+      <div className="relative max-w-4xl mx-auto px-6">
+
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div
+            className={`inline-flex items-center gap-2 rounded-full border border-slate-700 px-4 py-1.5 text-xs tracking-widest text-slate-400 transition-all ${isVisible ? 'opacity-100' : 'opacity-0'
+              }`}
+          >
+            CLIENT TESTIMONIALS
+          </div>
           <h2
-            className={`font-display text-4xl sm:text-5xl font-bold text-white mb-4 transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-            style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
+            className={`mt-4 text-3xl font-bold text-white tracking-tight transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
           >
-            What Our Clients Say
+            What our clients say
           </h2>
-          <p
-            className={`text-lg text-white/60 max-w-xl mx-auto transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-            style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '150ms' }}
-          >
-            Real stories from businesses we&apos;ve helped succeed
-          </p>
         </div>
 
-        {/* Testimonial Slider */}
-        <div 
-          className={`relative transition-all duration-700 ${
-            isVisible ? 'opacity-100' : 'opacity-0'
-          }`}
-          style={{ transitionTimingFunction: 'var(--ease-smooth)', transitionDelay: '300ms' }}
-        >
-          {/* Quote Icon */}
-          <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-10">
-            <div 
-              className={`w-16 h-16 rounded-full bg-gradient-brand flex items-center justify-center transition-all duration-700 ${
-                isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-              }`}
-              style={{ transitionTimingFunction: 'var(--ease-elastic)', transitionDelay: '500ms' }}
-            >
-              <Quote className="w-8 h-8 text-white" />
-            </div>
-          </div>
+        {/* Compact Card */}
+        <div className="relative mx-auto max-w-2xl">
+          <div className="rounded-3xl border border-slate-700/60 bg-slate-950/70 backdrop-blur-xl p-8 sm:p-10 shadow-xl">
 
-          {/* Cards Container */}
-          <div className="relative overflow-hidden pt-8">
-            <div 
-              className="flex transition-transform duration-500"
-              style={{ 
-                transform: `translateX(-${activeIndex * 100}%)`,
-                transitionTimingFunction: 'var(--ease-expo-out)',
-              }}
-            >
-              {testimonials.map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="w-full flex-shrink-0 px-4"
-                >
-                  <div className="relative bg-[#111] border border-white/10 rounded-2xl p-8 sm:p-12 text-center">
-                    {/* Quote */}
-                    <blockquote className="text-xl sm:text-2xl text-white leading-relaxed mb-8">
-                      &ldquo;{testimonial.quote}&rdquo;
-                    </blockquote>
+            {/* Accent top line */}
+            <div
+              className="absolute inset-x-8 top-0 h-px -translate-y-1/2"
+              style={{ background: `linear-gradient(90deg, transparent, ${active.accentColor}, transparent)` }}
+            />
 
-                    {/* Author */}
-                    <div className="flex flex-col items-center">
-                      <div className="w-16 h-16 rounded-full bg-gradient-brand flex items-center justify-center text-white text-xl font-bold font-accent mb-4">
-                        {testimonial.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
-                      </div>
-                      <cite className="not-italic">
-                        <span className="block text-white font-semibold text-lg">
-                          {testimonial.author}
-                        </span>
-                        <span className="block text-[#3b82f6] text-sm mt-1">
-                          {testimonial.role}, {testimonial.company}
-                        </span>
-                      </cite>
-                    </div>
-                  </div>
+            {/* Quote */}
+            <div className="text-5xl text-slate-700 mb-6">“</div>
+
+            <blockquote className="text-[15px] sm:text-base leading-relaxed text-slate-300 min-h-[110px]">
+              {active.quote}
+            </blockquote>
+
+            {/* Author */}
+            <div className="mt-8 flex items-center gap-4">
+              <div
+                className="w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-white text-lg flex-shrink-0"
+                style={{ background: `linear-gradient(135deg, ${active.accentColor}, #6366f1)` }}
+              >
+                {active.initials}
+              </div>
+              <div>
+                <p className="font-semibold text-white">{active.author}</p>
+                <p className="text-sm text-slate-400">{active.role} • {active.company}</p>
+              </div>
+              {active.featured && (
+                <div className="ml-auto text-[10px] px-3 py-1 border border-blue-500/30 bg-blue-500/10 text-blue-400 rounded-full">
+                  Featured
                 </div>
-              ))}
+              )}
             </div>
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-center gap-6 mt-8">
+          <div className="flex items-center justify-between mt-6 px-2">
             <button
               onClick={prevSlide}
               disabled={isAnimating}
-              className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 hover:border-[#3b82f6]/50 transition-all duration-300 disabled:opacity-50"
-              style={{ transitionTimingFunction: 'var(--ease-elastic)' }}
-              aria-label="Previous testimonial"
+              className="p-3 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-white transition-all disabled:opacity-40"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft size={20} />
             </button>
 
             {/* Dots */}
-            <div className="flex gap-3">
-              {testimonials.map((_, index) => (
+            <div className="flex gap-2">
+              {testimonials.map((_, i) => (
                 <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`relative w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === activeIndex 
-                      ? 'bg-[#3b82f6]' 
-                      : 'bg-white/20 hover:bg-white/40'
-                  }`}
-                  style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
-                  aria-label={`Go to testimonial ${index + 1}`}
-                >
-                  {index === activeIndex && (
-                    <span className="absolute inset-0 rounded-full bg-[#3b82f6] animate-ping opacity-50" />
-                  )}
-                </button>
+                  key={i}
+                  onClick={() => goToSlide(i)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === activeIndex
+                      ? 'bg-white scale-125'
+                      : 'bg-slate-600 hover:bg-slate-500'
+                    }`}
+                />
               ))}
             </div>
 
             <button
               onClick={nextSlide}
               disabled={isAnimating}
-              className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 hover:border-[#3b82f6]/50 transition-all duration-300 disabled:opacity-50"
-              style={{ transitionTimingFunction: 'var(--ease-elastic)' }}
-              aria-label="Next testimonial"
+              className="p-3 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-400 hover:text-white transition-all disabled:opacity-40"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight size={20} />
             </button>
           </div>
         </div>

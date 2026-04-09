@@ -1,4 +1,5 @@
-import { Heart } from 'lucide-react';
+import { useState } from 'react';
+import { Heart, ArrowUp, Mail, Phone, MapPin, Github, Linkedin, Twitter } from 'lucide-react';
 
 const navLinks = [
   { name: 'About Us', href: '#about' },
@@ -12,6 +13,8 @@ const navLinks = [
 ];
 
 export default function Footer() {
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+
   const scrollToSection = (href: string) => {
     if (href === '#') return;
     const element = document.querySelector(href);
@@ -20,48 +23,66 @@ export default function Footer() {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer className="relative bg-gradient-to-br from-[#0e43a6] to-[#0a2e75] overflow-hidden">
-      {/* Animated Background */}
-      <div 
-        className="absolute inset-0 opacity-30"
+    <footer className="relative bg-[#05070f] overflow-hidden pt-20 pb-12 border-t border-slate-800">
+      {/* Futuristic Background Effects */}
+      <div className="absolute inset-0 bg-[radial-gradient(at_30%_20%,rgba(56,189,248,0.08),transparent_50%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(at_70%_80%,rgba(165,243,252,0.06),transparent_60%)]" />
+
+      {/* Subtle grid */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
         style={{
-          background: 'linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.05) 50%, transparent 70%)',
-          backgroundSize: '200% 200%',
-          animation: 'gradient-shift 20s ease infinite',
+          backgroundImage: `linear-gradient(rgba(148,163,184,0.6) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(148,163,184,0.6) 1px, transparent 1px)`,
+          backgroundSize: '80px 80px',
         }}
       />
 
-      <div className="relative max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-16">
-          {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <a 
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-              className="inline-block font-display text-3xl font-bold text-white mb-6 hover:text-white/80 transition-colors duration-300"
-            >
-              Innoventix
-            </a>
-            <p className="text-white/70 leading-relaxed mb-6">
-              Innovertix is a creative collective of developers, designers, and innovators. 
-              We blend technology with imagination to craft impactful digital experiences — 
-              from responsive portfolios to AI-powered solutions.
+      <div className="relative max-w-[1300px] mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-12 gap-16">
+
+          {/* Brand + Description */}
+          <div className="lg:col-span-5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center">
+                <span className="text-white font-bold text-xl tracking-tighter">I</span>
+              </div>
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); scrollToTop(); }}
+                className="font-display text-4xl font-bold text-white tracking-tighter hover:text-cyan-300 transition-colors"
+              >
+                Innoventix
+              </a>
+            </div>
+
+            <p className="text-slate-400 text-[15px] leading-relaxed max-w-md">
+              We craft exceptional digital experiences by blending cutting-edge technology
+              with bold creativity. From scalable platforms to immersive interfaces — we build what matters.
             </p>
-            <p className="text-white/50 text-sm italic">
-              &ldquo;A great team builds great products.&rdquo;
-            </p>
+
+            <div className="mt-10 flex gap-4">
+              <a href="#" className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-cyan-500/50 hover:text-cyan-400 transition-all">
+                <Github className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-cyan-500/50 hover:text-cyan-400 transition-all">
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a href="#" className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-cyan-500/50 hover:text-cyan-400 transition-all">
+                <Twitter className="w-5 h-5" />
+              </a>
+            </div>
           </div>
 
-          {/* Navigation Links */}
-          <div>
-            <h3 className="font-display text-lg font-semibold text-white mb-6">
-              Quick Links
-            </h3>
-            <div className="grid grid-cols-2 gap-3">
+          {/* Quick Links */}
+          <div className="lg:col-span-3">
+            <h3 className="text-xs uppercase tracking-[2px] text-slate-500 mb-6">Navigation</h3>
+            <div className="grid grid-cols-1 gap-y-3">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -70,73 +91,95 @@ export default function Footer() {
                     e.preventDefault();
                     scrollToSection(link.href);
                   }}
-                  className="text-white/70 hover:text-white text-sm transition-colors duration-300 relative group"
+                  onMouseEnter={() => setHoveredLink(link.name)}
+                  onMouseLeave={() => setHoveredLink(null)}
+                  className="group flex items-center text-slate-300 hover:text-white transition-all text-[15px]"
                 >
-                  {link.name}
-                  <span className="absolute -bottom-0.5 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full" />
+                  <span className="relative">
+                    {link.name}
+                    <span
+                      className="absolute -bottom-px left-0 h-px bg-gradient-to-r from-cyan-400 to-transparent transition-all duration-300"
+                      style={{ width: hoveredLink === link.name ? '100%' : '0%' }}
+                    />
+                  </span>
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="font-display text-lg font-semibold text-white mb-6">
-              Get in Touch
-            </h3>
-            <div className="space-y-4">
-              <a 
+          {/* Contact */}
+          <div className="lg:col-span-4">
+            <h3 className="text-xs uppercase tracking-[2px] text-slate-500 mb-6">Connect With Us</h3>
+
+            <div className="space-y-6">
+              <a
                 href="mailto:team.innoventix@gmail.com"
-                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors duration-300"
+                className="group flex items-start gap-4 text-slate-300 hover:text-white transition-all"
               >
-                <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-sm">
-                  @
-                </span>
-                team.innoventix@gmail.com
+                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/40 transition-colors">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-400">Email</p>
+                  <p className="font-medium">team.innoventix@gmail.com</p>
+                </div>
               </a>
-              <a 
+
+              <a
                 href="tel:+919078509424"
-                className="flex items-center gap-3 text-white/70 hover:text-white transition-colors duration-300"
+                className="group flex items-start gap-4 text-slate-300 hover:text-white transition-all"
               >
-                <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-sm">
-                  #
-                </span>
-                +91 90785 09424
+                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/40 transition-colors">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-400">Phone</p>
+                  <p className="font-medium">+91 90785 09424</p>
+                </div>
               </a>
-              <div className="flex items-center gap-3 text-white/70">
-                <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-sm">
-                  #
-                </span>
-                101, Patia, Bhubaneswar, Odisha
+
+              <div className="flex items-start gap-4 text-slate-300">
+                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-400">Location</p>
+                  <p className="font-medium leading-tight">
+                    101, Patia<br />
+                    Bhubaneswar, Odisha
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Divider */}
-        <div className="my-12 h-px bg-white/10" />
-
-        {/* Copyright */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-white/50 text-sm text-center sm:text-left">
-            &copy; {new Date().getFullYear()} Innovertix. All rights reserved.
+        {/* Bottom Bar */}
+        <div className="mt-20 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
+          <p className="text-slate-500">
+            © {new Date().getFullYear()} Innoventix. All rights reserved.
           </p>
-          <p className="text-white/50 text-sm flex items-center gap-2">
-            Made with 
-            <Heart className="w-4 h-4 text-red-400 fill-red-400 animate-pulse" /> 
-            in India
+
+          <button
+            onClick={scrollToTop}
+            className="group flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-colors"
+          >
+            Back to top
+            <div className="w-8 h-8 rounded-full border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/50 transition-all">
+              <ArrowUp className="w-4 h-4" />
+            </div>
+          </button>
+
+          <p className="text-slate-500 flex items-center gap-1.5">
+            Crafted with{' '}
+            <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" />{' '}
+            in Bhubaneswar, India
           </p>
         </div>
       </div>
 
-      {/* CSS for gradient animation */}
-      <style>{`
-        @keyframes gradient-shift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-      `}</style>
+      {/* Bottom neon line */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
     </footer>
   );
 }

@@ -20,7 +20,7 @@ export default function Hero() {
 
   useEffect(() => {
     setIsLoaded(true);
-    
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -67,7 +67,7 @@ export default function Hero() {
           const dx = mouseRef.current.x - particle.x;
           const dy = mouseRef.current.y - particle.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          
+
           if (dist < 150) {
             const force = (150 - dist) / 150;
             particle.vx -= (dx / dist) * force * 0.5;
@@ -152,13 +152,12 @@ export default function Hero() {
             </div>
 
             <div className="space-y-6">
-              <div className={`flex items-start justify-between gap-8 transition-all duration-1000 ${
-                isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`} style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '400ms' }}>
+              <div className={`flex items-start justify-between gap-8 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`} style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '400ms' }}>
                 <h1 className="font-display text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight text-white leading-tight flex-1">
                   Next-gen digital products for modern enterprise growth.
                 </h1>
-                
+
                 <div className="flex-shrink-0 flex items-center">
                   <div className="relative group">
                     <div className="absolute inset-0 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
@@ -171,9 +170,8 @@ export default function Hero() {
                 </div>
               </div>
 
-              <p className={`max-w-2xl text-base sm:text-lg text-slate-300/90 leading-8 transition-all duration-1000 ${
-                isLoaded ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-5 blur-sm'
-              }`} style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '650ms' }}>
+              <p className={`max-w-2xl text-base sm:text-lg text-slate-300/90 leading-8 transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-5 blur-sm'
+                }`} style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '650ms' }}>
                 Innoventix partners with ambitious brands to deliver futuristic web, cloud, and AI experiences that scale globally and amplify business performance.
               </p>
             </div>
@@ -198,9 +196,9 @@ export default function Hero() {
 
             <div className="grid gap-4 sm:grid-cols-3">
               {[
-                { value: '150+', label: 'Enterprise launches' },
-                { value: '45+', label: 'Countries served' },
-                { value: '98%', label: 'Client satisfaction' },
+                { value: '10+', label: 'Projects Completed' },
+                { value: '10+', label: 'Happy Clients' },
+                // { value: '98%', label: 'Client satisfaction' },
               ].map((item) => (
                 <div key={item.label} className="rounded-3xl border border-slate-700/70 bg-slate-950/60 p-5 shadow-[0_28px_80px_-60px_rgba(15,23,42,0.9)] backdrop-blur-xl">
                   <p className="text-3xl font-display font-semibold text-white">{item.value}</p>
@@ -210,7 +208,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative overflow-hidden rounded-[2rem] border border-slate-700/60 bg-slate-950/70 p-8 shadow-[0_50px_120px_-80px_rgba(15,23,42,0.85)] backdrop-blur-xl">
+          {/* <div className="relative overflow-hidden rounded-[2rem] border border-slate-700/60 bg-slate-950/70 p-8 shadow-[0_50px_120px_-80px_rgba(15,23,42,0.85)] backdrop-blur-xl">
             <div className="absolute inset-x-8 top-8 h-1 rounded-full bg-gradient-to-r from-cyan-400/70 via-sky-500/40 to-indigo-400/50 blur-2xl" />
             <div className="space-y-6 relative">
               <div className="rounded-[1.75rem] border border-slate-700/70 bg-slate-900/80 p-6 shadow-[0_20px_80px_-40px_rgba(15,23,42,0.65)]">
@@ -249,7 +247,7 @@ export default function Hero() {
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
