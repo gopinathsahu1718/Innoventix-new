@@ -39,17 +39,15 @@ export default function Founder() {
             Meet the visionary
           </div>
           <h2
-            className={`font-display text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
+            className={`font-display text-4xl sm:text-5xl font-bold text-white mb-4 tracking-tight transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+              }`}
             style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
             The founder behind Innoventix
           </h2>
           <p
-            className={`text-lg text-slate-300/75 max-w-md mx-auto leading-relaxed transition-all duration-700 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+            className={`text-lg text-slate-300/75 max-w-md mx-auto leading-relaxed transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
             style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '150ms' }}
           >
             The mind architecting next-generation digital solutions for global enterprise growth.
@@ -58,9 +56,8 @@ export default function Founder() {
 
         {/* Founder Card */}
         <div
-          className={`transition-all duration-700 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}
+          className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+            }`}
           style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '300ms' }}
         >
           <div className="relative rounded-[2rem] border border-slate-700/60 bg-slate-950/75 backdrop-blur-xl overflow-hidden grid grid-cols-1 md:grid-cols-[40%_60%] shadow-[0_60px_140px_-80px_rgba(15,23,42,0.95)] min-h-[680px]">
@@ -87,7 +84,7 @@ export default function Founder() {
               />
 
               {/* Fallback initials */}
-                {/* <div className="absolute inset-0 flex items-center justify-center pb-72 pointer-events-none">
+              {/* <div className="absolute inset-0 flex items-center justify-center pb-72 pointer-events-none">
                   <div
                     className="w-40 h-40 rounded-full border-[3px] border-sky-400/35 flex items-center justify-center text-5xl font-bold text-white tracking-widest"
                     style={{ background: 'linear-gradient(135deg, #0e43a6, #0ea5e9)' }}
