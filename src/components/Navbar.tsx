@@ -21,7 +21,6 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -37,15 +36,13 @@ export default function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
             ? 'bg-black/95 backdrop-blur-xl border-b border-white/10'
             : 'bg-transparent'
-        }`}
-        style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
+          }`}
       >
         <div className="max-w-[1300px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
             <a
               href="#"
@@ -57,11 +54,8 @@ export default function Navbar() {
             >
               <img
                 src={logo}
-                alt="Logo"
-                className="h-14 w-auto object-contain"
-                // onError={(e) => {
-                //   (e.target as HTMLImageElement).style.display = 'none';
-                // }}
+                alt="Innoventix Logo"
+                className="h-10 sm:h-12 lg:h-14 w-auto object-contain"
               />
             </a>
 
@@ -83,44 +77,37 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* CTA Button */}
+            {/* Desktop CTA */}
             <div className="hidden lg:block">
               <a
-                href="#why-us"
+                href="#about"
                 onClick={(e) => {
                   e.preventDefault();
                   scrollToSection('#about');
                 }}
-                className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-brand text-white text-sm font-semibold rounded-full hover:shadow-lg hover:shadow-[#0e43a6]/30 transition-all duration-300 group"
-                style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
+                className="inline-flex items-center gap-2 px-6 py-2.5 bg-gradient-brand text-white text-sm font-semibold rounded-full hover:shadow-lg hover:shadow-[#0e43a6]/30 transition-all duration-300"
               >
                 Why Choose Us
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <ChevronRight className="w-4 h-4" />
               </a>
             </div>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-white hover:text-[#3b82f6] transition-colors duration-300"
+              className="lg:hidden p-2 text-white hover:text-sky-400 transition-colors"
               aria-label="Toggle menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - FIXED SCROLLING */}
       <div
-        className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${
-          isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
+        className={`fixed inset-0 z-40 lg:hidden transition-all duration-500 ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          }`}
       >
         {/* Backdrop */}
         <div
@@ -128,15 +115,14 @@ export default function Navbar() {
           onClick={() => setIsMobileMenuOpen(false)}
         />
 
-        {/* Menu Content */}
+        {/* Menu Content - Now Scrollable */}
         <div
-          className={`absolute right-0 top-0 h-full w-80 bg-[#0a0a0a] border-l border-white/10 transform transition-transform duration-500 ${
-            isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          className={`absolute right-0 top-0 h-full w-full max-w-[340px] bg-[#0a0a0a] border-l border-white/10 transform transition-transform duration-500 overflow-y-auto ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
           style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
         >
-          <div className="pt-24 px-6">
-            <div className="flex flex-col gap-4">
+          <div className="pt-20 px-6 pb-12 min-h-full">
+            <div className="flex flex-col gap-2">
               {navLinks.map((link, index) => (
                 <a
                   key={link.name}
@@ -145,28 +131,25 @@ export default function Navbar() {
                     e.preventDefault();
                     scrollToSection(link.href);
                   }}
-                  className="text-lg text-white/80 hover:text-white py-3 border-b border-white/10 transition-all duration-300 hover:pl-2"
-                  style={{
-                    animationDelay: `${index * 80}ms`,
-                    transitionTimingFunction: 'var(--ease-expo-out)',
-                  }}
+                  className="text-lg text-white/80 hover:text-white py-4 border-b border-white/10 transition-all hover:pl-3"
+                  style={{ animationDelay: `${index * 60}ms` }}
                 >
                   {link.name}
                 </a>
               ))}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-12">
               <a
                 href="#about"
                 onClick={(e) => {
                   e.preventDefault();
                   scrollToSection('#about');
                 }}
-                className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-brand text-white font-semibold rounded-full w-full justify-center"
+                className="inline-flex items-center justify-center gap-2 w-full py-4 bg-gradient-brand text-white font-semibold rounded-full text-base"
               >
                 Why Choose Us
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className="w-5 h-5" />
               </a>
             </div>
           </div>
