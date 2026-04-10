@@ -19,7 +19,7 @@ const testimonials: Testimonial[] = [
     company: "HearingZen",
     initials: "HZ",
     accentColor: "#38bdf8",
-    featured: true,
+    // featured: true,
   },
   {
     quote: "Working with Innoventix was a game-changer for our business. Their technical expertise and attention to detail resulted in a platform that exceeded our expectations.",
@@ -156,8 +156,8 @@ export default function Testimonials() {
                   key={i}
                   onClick={() => goToSlide(i)}
                   className={`w-2.5 h-2.5 rounded-full transition-all ${i === activeIndex
-                      ? 'bg-white scale-125'
-                      : 'bg-slate-600 hover:bg-slate-500'
+                    ? 'bg-white scale-125'
+                    : 'bg-slate-600 hover:bg-slate-500'
                     }`}
                 />
               ))}

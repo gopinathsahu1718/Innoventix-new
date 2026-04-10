@@ -73,12 +73,11 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-[#f0f4ff] overflow-hidden"
+      className="relative py-16 sm:py-24 bg-[#f0f4ff] overflow-hidden"
     >
       {/* Ambient blobs */}
-      <div className="pointer-events-none absolute -top-20 -right-16 w-[480px] h-[480px] rounded-full bg-blue-500/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-16 -left-10 w-[420px] h-[420px] rounded-full bg-cyan-400/9 blur-[120px]" />
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-indigo-500/5 blur-[100px]" />
+      <div className="pointer-events-none absolute -top-20 -right-16 w-[380px] h-[380px] sm:w-[480px] sm:h-[480px] rounded-full bg-blue-500/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-16 -left-10 w-[320px] h-[320px] sm:w-[420px] sm:h-[420px] rounded-full bg-cyan-400/9 blur-[120px]" />
 
       {/* Subtle grid */}
       <div
@@ -91,9 +90,8 @@ export default function Contact() {
       />
 
       <div className="relative z-10 max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 sm:mb-16">
           <div
             className={`inline-flex items-center gap-2 rounded-full border border-blue-300/40 bg-white/80 backdrop-blur-sm px-4 py-2 text-xs uppercase tracking-[0.35em] text-blue-700 shadow-[0_2px_12px_rgba(59,130,246,0.1)] mb-5 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
@@ -114,7 +112,7 @@ export default function Contact() {
           </h2>
 
           <p
-            className={`text-lg text-slate-500 max-w-md mx-auto leading-relaxed transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            className={`text-base sm:text-lg text-slate-500 max-w-md mx-auto leading-relaxed transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
               }`}
             style={{ transitionDelay: '280ms', transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
@@ -123,24 +121,22 @@ export default function Contact() {
         </div>
 
         {/* Two-column grid */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
 
-          {/* ── Form card ── */}
+          {/* Form Card - Compact Inputs */}
           <div
-            className={`relative rounded-3xl border border-blue-200/50 bg-white shadow-[0_20px_60px_-20px_rgba(59,130,246,0.12)] p-8 sm:p-10 overflow-hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            className={`relative rounded-3xl border border-blue-200/50 bg-white shadow-[0_20px_60px_-20px_rgba(59,130,246,0.12)] p-6 sm:p-8 lg:p-10 overflow-hidden transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             style={{ transitionDelay: '350ms', transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
-            {/* Top shimmer */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-cyan-400/40 rounded-t-3xl" />
 
-            <p className="font-display text-lg font-bold text-slate-900 mb-1">Send us a message</p>
+            <p className="font-display text-xl sm:text-2xl font-bold text-slate-900 mb-1">Send us a message</p>
             <p className="text-sm text-slate-400 mb-8 leading-relaxed">
               Fill in the form and our team will get back to you within 24 hours.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Name */}
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-widest text-blue-500 mb-2">
                   Your Name
@@ -154,14 +150,13 @@ export default function Contact() {
                   onBlur={() => setFocusedField(null)}
                   placeholder="John Doe"
                   required
-                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200 ${focusedField === 'name'
-                    ? 'border-blue-400 ring-[3px] ring-blue-500/12 bg-white'
+                  className={`w-full bg-slate-50 border rounded-2xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200 ${focusedField === 'name'
+                    ? 'border-blue-400 ring-2 ring-blue-500/20 bg-white'
                     : 'border-blue-100 hover:border-blue-200'
                     }`}
                 />
               </div>
 
-              {/* Email */}
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-widest text-blue-500 mb-2">
                   Email Address
@@ -175,14 +170,13 @@ export default function Contact() {
                   onBlur={() => setFocusedField(null)}
                   placeholder="john@company.com"
                   required
-                  className={`w-full bg-slate-50 border rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200 ${focusedField === 'email'
-                    ? 'border-blue-400 ring-[3px] ring-blue-500/12 bg-white'
+                  className={`w-full bg-slate-50 border rounded-2xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-200 ${focusedField === 'email'
+                    ? 'border-blue-400 ring-2 ring-blue-500/20 bg-white'
                     : 'border-blue-100 hover:border-blue-200'
                     }`}
                 />
               </div>
 
-              {/* Message */}
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-widest text-blue-500 mb-2">
                   Your Message
@@ -198,34 +192,33 @@ export default function Contact() {
                     required
                     maxLength={200}
                     rows={4}
-                    className={`w-full bg-slate-50 border rounded-xl px-4 py-3.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none resize-none transition-all duration-200 ${focusedField === 'message'
-                      ? 'border-blue-400 ring-[3px] ring-blue-500/12 bg-white'
+                    className={`w-full bg-slate-50 border rounded-2xl px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 outline-none resize-none transition-all duration-200 ${focusedField === 'message'
+                      ? 'border-blue-400 ring-2 ring-blue-500/20 bg-white'
                       : 'border-blue-100 hover:border-blue-200'
                       }`}
                   />
-                  <span className="absolute bottom-3 right-4 text-[11px] text-slate-400">{charCount}/200</span>
+                  <span className="absolute bottom-3 right-4 text-xs text-slate-400">{charCount}/200</span>
                 </div>
               </div>
 
-              {/* Submit */}
               <button
                 type="submit"
                 disabled={isSubmitting || isSubmitted}
-                className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-500 to-cyan-400 text-white text-sm font-semibold rounded-full shadow-[0_8px_24px_rgba(59,130,246,0.3)] hover:shadow-[0_16px_40px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-3 group"
+                className="w-full py-4 bg-gradient-to-r from-blue-500 to-cyan-400 text-white text-base font-semibold rounded-2xl shadow-[0_8px_24px_rgba(59,130,246,0.3)] hover:shadow-[0_12px_32px_rgba(59,130,246,0.4)] hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-3 group"
               >
                 {isSubmitting ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     Sending...
                   </>
                 ) : isSubmitted ? (
                   <>
-                    <CheckCircle className="w-4 h-4" />
+                    <CheckCircle className="w-5 h-5" />
                     Message Sent!
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                    <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                     Send Message
                   </>
                 )}
@@ -233,22 +226,21 @@ export default function Contact() {
             </form>
           </div>
 
-          {/* ── Info column ── */}
+          {/* Reach Us Column - More Compact */}
           <div
             className={`flex flex-col gap-5 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
             style={{ transitionDelay: '480ms', transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
-            <div className="mb-4">
+            <div className="mb-4 sm:mb-6">
               <p className="text-[11px] font-medium uppercase tracking-[0.3em] text-blue-500 mb-2">Reach us</p>
-              <h3 className="font-display text-2xl font-bold text-slate-900 leading-tight mb-3">
+              <h3 className="font-display text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mb-3">
                 We&apos;re always ready<br />to connect
               </h3>
-              <p className="text-sm text-slate-500 leading-relaxed mb-6">
+              <p className="text-sm sm:text-base text-slate-500 leading-relaxed mb-6">
                 Whether you&apos;re ready to start a project or just exploring — reach out and let&apos;s talk.
               </p>
 
-              {/* Response time pill */}
               <div className="inline-flex items-center gap-2.5 bg-sky-50 border border-cyan-300/40 rounded-full px-4 py-2">
                 <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
                 <span className="text-xs font-medium text-sky-700">Typically responds within a few hours</span>
@@ -261,32 +253,31 @@ export default function Contact() {
                 <a
                   key={info.label}
                   href={info.href}
-                  className={`group flex items-center gap-4 bg-white border border-blue-100 rounded-2xl px-6 py-5 shadow-[0_4px_20px_rgba(59,130,246,0.05)] hover:border-blue-300/60 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(59,130,246,0.12)] transition-all duration-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
-                    }`
-                  }
+                  className={`group flex items-center gap-4 bg-white border border-blue-100 rounded-2xl px-5 py-5 shadow-[0_4px_20px_rgba(59,130,246,0.05)] hover:border-blue-300/60 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(59,130,246,0.12)] transition-all duration-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                    }`}
                   style={{
-                    transitionDelay: `${580 + index * 100}ms`,
+                    transitionDelay: `${580 + index * 80}ms`,
                     transitionTimingFunction: 'var(--ease-expo-out)',
                   }}
                 >
-                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-500/12 to-cyan-400/10 border border-blue-200/60 flex items-center justify-center flex-shrink-0 group-hover:border-blue-400/40 transition-colors duration-300">
-                    <Icon className="w-4.5 h-4.5 text-blue-500" strokeWidth={1.8} />
+                  <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-400/10 border border-blue-200/60 flex items-center justify-center flex-shrink-0 group-hover:border-blue-400/40 transition-colors duration-300">
+                    <Icon className="w-5 h-5 text-blue-500" strokeWidth={1.8} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[11px] font-medium uppercase tracking-widest text-slate-400 mb-0.5">
                       {info.label}
                     </p>
-                    <p className="text-sm font-medium text-slate-800 truncate group-hover:text-blue-600 transition-colors duration-300">
+                    <p className="text-sm font-medium text-slate-800 break-words group-hover:text-blue-600 transition-colors duration-300">
                       {info.value}
                     </p>
                   </div>
-                  <span className="text-slate-300 group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-300 text-lg">›</span>
+                  <span className="text-slate-300 group-hover:text-blue-400 group-hover:translate-x-1 transition-all duration-300 text-xl">›</span>
                 </a>
               );
             })}
           </div>
         </div>
       </div>
-    </section >
+    </section>
   );
 }

@@ -2,6 +2,41 @@ import { useEffect, useRef, useState } from 'react';
 import { Linkedin, Github, Twitter } from 'lucide-react';
 import founderImg from '/assets/founder-innoventix.png';
 
+function useCountUp(target: number, duration: number = 1600, start: boolean = false) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    let startTime: number | null = null;
+    const raf = requestAnimationFrame(function step(timestamp) {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      setCount(Math.floor(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [start, target, duration]);
+  return count;
+}
+
+function StatCard({ value, label, animate, delay = 0 }: { value: number; label: string; animate: boolean; delay?: number }) {
+  const [active, setActive] = useState(false);
+  useEffect(() => {
+    if (!animate) return;
+    const t = setTimeout(() => setActive(true), delay);
+    return () => clearTimeout(t);
+  }, [animate, delay]);
+  const count = useCountUp(value, 1600, active);
+  return (
+    <div className="rounded-[18px] border border-slate-700/65 bg-slate-900/80 p-3 sm:p-4 text-center min-w-0">
+      <p className="text-xl sm:text-2xl font-display font-semibold text-white tabular-nums">
+        {count}<span className="text-sky-400">+</span>
+      </p>
+      <p className="text-[10px] sm:text-xs text-slate-400 mt-1.5 leading-snug break-words hyphens-auto">{label}</p>
+    </div>
+  );
+}
+
 export default function Founder() {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -60,7 +95,7 @@ export default function Founder() {
             }`}
           style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '300ms' }}
         >
-          <div className="relative rounded-[2rem] border border-slate-700/60 bg-slate-950/75 backdrop-blur-xl overflow-hidden grid grid-cols-1 md:grid-cols-[40%_60%] shadow-[0_60px_140px_-80px_rgba(15,23,42,0.95)] min-h-[680px]">
+          <div className="relative rounded-[2rem] border border-slate-700/60 bg-slate-950/75 backdrop-blur-xl overflow-hidden grid grid-cols-1 md:grid-cols-[40%_60%] shadow-[0_60px_140px_-80px_rgba(15,23,42,0.95)]">
 
             {/* Top accent line */}
             <div className="absolute inset-x-14 top-0 h-px bg-gradient-to-r from-transparent via-sky-400/45 to-transparent" />
@@ -73,57 +108,100 @@ export default function Founder() {
                   'linear-gradient(160deg, rgba(14,67,166,0.4) 0%, rgba(14,165,233,0.22) 50%, rgba(99,102,241,0.25) 100%)',
               }}
             >
-              {/* Founder photo */}
+              {/* 
+                MOBILE: fixed height container so face is visible 
+                DESKTOP: absolute fill so image covers full left panel 
+              */}
+
+              {/* Mobile image container — fixed aspect ratio, face centered at top */}
+              <div className="block md:hidden relative w-full" style={{ height: '420px' }}>
+                <img
+                  src={founderImg}
+                  alt="Gopinath Sahu — Founder & CEO, Innoventix"
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: '50% 8%' }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+                {/* Gradient overlay for mobile */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      'linear-gradient(to top, rgba(2,6,23,0.98) 0%, rgba(2,6,23,0.55) 42%, transparent 72%)',
+                  }}
+                />
+                {/* Name + badge overlaid at bottom of image on mobile */}
+                <div className="absolute bottom-0 left-0 right-0 px-6 pb-6">
+                  <h3 className="font-display text-2xl font-bold text-white tracking-tight mb-2">
+                    Gopinath Sahu
+                  </h3>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/15 px-4 py-2 text-xs uppercase tracking-[0.28em] text-sky-300">
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 inline-block" />
+                    Founder &amp; CEO
+                  </span>
+                </div>
+              </div>
+
+              {/* Desktop image — absolute fill */}
               <img
                 src={founderImg}
                 alt="Gopinath Sahu — Founder & CEO, Innoventix"
-                className="absolute inset-0 w-full h-full object-cover object-top"
+                className="hidden md:block absolute inset-0 w-full h-full object-cover object-top"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
                 }}
               />
 
-              {/* Fallback initials */}
-              {/* <div className="absolute inset-0 flex items-center justify-center pb-72 pointer-events-none">
-                  <div
-                    className="w-40 h-40 rounded-full border-[3px] border-sky-400/35 flex items-center justify-center text-5xl font-bold text-white tracking-widest"
-                    style={{ background: 'linear-gradient(135deg, #0e43a6, #0ea5e9)' }}
-                  >
-                    GS
-                  </div>
-                </div> */}
-
-              {/* Bottom overlay */}
+              {/* Desktop bottom overlay with name + quote + socials */}
               <div
-                className="relative z-10 mt-auto px-8 pb-9 pt-24"
+                className="hidden md:block relative z-10 mt-auto px-8 pb-9 pt-24"
                 style={{
                   background:
                     'linear-gradient(to top, rgba(2,6,23,0.98) 0%, rgba(2,6,23,0.78) 58%, transparent 100%)',
                 }}
               >
-                {/* Name */}
                 <h3 className="font-display text-2xl font-bold text-white tracking-tight mb-2">
                   Gopinath Sahu
                 </h3>
-
-                {/* Founder badge */}
                 <span className="inline-flex items-center gap-2 rounded-full border border-sky-400/30 bg-sky-500/15 px-4 py-2 text-xs uppercase tracking-[0.28em] text-sky-300">
                   <span className="w-1.5 h-1.5 rounded-full bg-sky-400 inline-block" />
                   Founder &amp; CEO
                 </span>
-
-                {/* Divider */}
                 <div className="my-5 h-px bg-slate-700/60" />
-
-                {/* Quote */}
                 <p className="text-sm text-sky-200/85 leading-[1.75] italic mb-2">
                   "We build systems that don't just work today — they scale for what enterprises need five years from now."
                 </p>
                 <p className="text-xs text-slate-500 mb-6">
                   — Gopinath Sahu, Founder &amp; CEO, Innoventix
                 </p>
+                <div className="flex gap-3">
+                  {[
+                    { Icon: Linkedin, label: 'LinkedIn' },
+                    { Icon: Github, label: 'GitHub' },
+                    { Icon: Twitter, label: 'Twitter' },
+                  ].map(({ Icon, label }) => (
+                    <button
+                      key={label}
+                      aria-label={label}
+                      className="w-10 h-10 rounded-full border border-slate-700/80 bg-slate-900/70 flex items-center justify-center text-slate-400 hover:border-sky-400/50 hover:text-sky-300 transition-all duration-300"
+                    >
+                      <Icon className="w-5 h-5" />
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-                {/* Social links */}
+              {/* Mobile — quote + socials BELOW the image block */}
+              <div className="block md:hidden px-6 pb-8 pt-5 bg-slate-950/90">
+                <div className="h-px bg-slate-700/60 mb-5" />
+                <p className="text-sm text-sky-200/85 leading-[1.75] italic mb-2">
+                  "We build systems that don't just work today — they scale for what enterprises need five years from now."
+                </p>
+                <p className="text-xs text-slate-500 mb-5">
+                  — Gopinath Sahu, Founder &amp; CEO, Innoventix
+                </p>
                 <div className="flex gap-3">
                   {[
                     { Icon: Linkedin, label: 'LinkedIn' },
@@ -143,7 +221,7 @@ export default function Founder() {
             </div>
 
             {/* ── RIGHT — Content ── */}
-            <div className="flex flex-col gap-8 p-10 border-t md:border-t-0 md:border-l border-slate-700/50">
+            <div className="flex flex-col gap-6 sm:gap-8 p-6 sm:p-8 md:p-10 border-t md:border-t-0 md:border-l border-slate-700/50">
 
               {/* About */}
               <div>
@@ -164,7 +242,7 @@ export default function Founder() {
                 <p className="text-xs uppercase tracking-[0.32em] text-slate-500 mb-3">
                   Roles &amp; specialisations
                 </p>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex flex-wrap gap-2">
                   {[
                     'Full-Stack Engineer',
                     'Cloud Architect',
@@ -174,7 +252,7 @@ export default function Founder() {
                   ].map((r) => (
                     <span
                       key={r}
-                      className="rounded-full border border-slate-700/75 bg-slate-900/85 px-4 py-2 text-sm font-medium text-slate-300"
+                      className="rounded-full border border-slate-700/75 bg-slate-900/85 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-medium text-slate-300"
                     >
                       {r}
                     </span>
@@ -187,7 +265,7 @@ export default function Founder() {
                 <p className="text-xs uppercase tracking-[0.32em] text-slate-500 mb-3">
                   Core expertise
                 </p>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-2.5">
                   {[
                     { label: 'Full-stack systems engineering & modern web platforms', color: 'bg-sky-400' },
                     { label: 'Cloud architecture — AWS / GCP / Azure infrastructure', color: 'bg-indigo-400' },
@@ -196,34 +274,34 @@ export default function Founder() {
                   ].map((item) => (
                     <div
                       key={item.label}
-                      className="flex items-center gap-3 rounded-2xl border border-slate-700/70 bg-slate-900/80 px-5 py-3.5"
+                      className="flex items-center gap-3 rounded-2xl border border-slate-700/70 bg-slate-900/80 px-4 py-3 sm:px-5 sm:py-3.5"
                     >
                       <span className={`w-2 h-2 rounded-full flex-shrink-0 ${item.color}`} />
-                      <span className="text-sm font-medium text-slate-200">{item.label}</span>
+                      <span className="text-xs sm:text-sm font-medium text-slate-200 leading-snug">{item.label}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Stats */}
+              {/* Stats — 2×2 on mobile, 4×1 on sm+ */}
               <div>
                 <p className="text-xs uppercase tracking-[0.32em] text-slate-500 mb-3">
                   At a glance
                 </p>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                   {[
-                    { value: '8+', label: 'Years engineering' },
-                    { value: '50+', label: 'Projects delivered' },
-                    { value: '12+', label: 'Certifications' },
-                    { value: '15+', label: 'Tech partnerships' },
+                    { value: 8, label: 'Years engineering', delay: 0 },
+                    { value: 50, label: 'Projects delivered', delay: 150 },
+                    { value: 12, label: 'Certifications', delay: 300 },
+                    { value: 15, label: 'Tech partnerships', delay: 450 },
                   ].map((item) => (
-                    <div
+                    <StatCard
                       key={item.label}
-                      className="rounded-[18px] border border-slate-700/65 bg-slate-900/80 p-4 text-center"
-                    >
-                      <p className="text-2xl font-display font-semibold text-white">{item.value}</p>
-                      <p className="text-xs text-slate-400 mt-1.5 leading-snug">{item.label}</p>
-                    </div>
+                      value={item.value}
+                      label={item.label}
+                      animate={isVisible}
+                      delay={item.delay}
+                    />
                   ))}
                 </div>
               </div>

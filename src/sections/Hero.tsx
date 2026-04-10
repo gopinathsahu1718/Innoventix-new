@@ -186,6 +186,7 @@ export default function Hero() {
             </div>
 
             {/* Stats */}
+            {/*
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-8">
               {[
                 { value: '10+', label: 'Projects Completed' },
@@ -201,6 +202,7 @@ export default function Hero() {
                 </div>
               ))}
             </div>
+            */}
           </div>
         </div>
       </div>

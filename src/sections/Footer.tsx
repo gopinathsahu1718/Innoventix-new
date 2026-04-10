@@ -28,7 +28,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative bg-[#05070f] overflow-hidden pt-20 pb-12 border-t border-slate-800">
+    <footer className="relative bg-[#05070f] overflow-hidden pt-16 pb-12 border-t border-slate-800">
       {/* Futuristic Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(at_30%_20%,rgba(56,189,248,0.08),transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(at_70%_80%,rgba(165,243,252,0.06),transparent_60%)]" />
@@ -43,8 +43,8 @@ export default function Footer() {
         }}
       />
 
-      <div className="relative max-w-[1300px] mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-16">
+      <div className="relative max-w-[1300px] mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16">
 
           {/* Brand + Description */}
           <div className="lg:col-span-5">
@@ -55,7 +55,7 @@ export default function Footer() {
               <a
                 href="#"
                 onClick={(e) => { e.preventDefault(); scrollToTop(); }}
-                className="font-display text-4xl font-bold text-white tracking-tighter hover:text-cyan-300 transition-colors"
+                className="font-display text-3xl sm:text-4xl font-bold text-white tracking-tighter hover:text-cyan-300 transition-colors"
               >
                 Innoventix
               </a>
@@ -66,14 +66,23 @@ export default function Footer() {
               with bold creativity. From scalable platforms to immersive interfaces — we build what matters.
             </p>
 
-            <div className="mt-10 flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-cyan-500/50 hover:text-cyan-400 transition-all">
+            <div className="mt-8 sm:mt-10 flex gap-4">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-2xl text-cyan-400 border border-cyan-500/50 flex items-center justify-center hover:border-slate-700 hover:text-slate-700 transition-all"
+              >
                 <Github className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-cyan-500/50 hover:text-cyan-400 transition-all">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-2xl text-cyan-400 border border-cyan-500/50 flex items-center justify-center hover:border-slate-700 hover:text-slate-700 transition-all"
+              >
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-2xl bg-slate-900 border border-slate-700 flex items-center justify-center hover:border-cyan-500/50 hover:text-cyan-400 transition-all">
+              <a
+                href="#"
+                className="w-10 h-10 rounded-2xl text-cyan-400 border border-cyan-500/50 flex items-center justify-center hover:border-slate-700 hover:text-slate-700 transition-all"
+              >
                 <Twitter className="w-5 h-5" />
               </a>
             </div>
@@ -82,7 +91,7 @@ export default function Footer() {
           {/* Quick Links */}
           <div className="lg:col-span-3">
             <h3 className="text-xs uppercase tracking-[2px] text-slate-500 mb-6">Navigation</h3>
-            <div className="grid grid-cols-1 gap-y-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-8">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
@@ -116,12 +125,12 @@ export default function Footer() {
                 href="mailto:team.innoventix@gmail.com"
                 className="group flex items-start gap-4 text-slate-300 hover:text-white transition-all"
               >
-                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/40 transition-colors">
+                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/40 transition-colors flex-shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0">
                   <p className="text-sm text-slate-400">Email</p>
-                  <p className="font-medium">team.innoventix@gmail.com</p>
+                  <p className="font-medium text-sm sm:text-base break-all">team.innoventix@gmail.com</p>
                 </div>
               </a>
 
@@ -129,7 +138,7 @@ export default function Footer() {
                 href="tel:+919078509424"
                 className="group flex items-start gap-4 text-slate-300 hover:text-white transition-all"
               >
-                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/40 transition-colors">
+                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/40 transition-colors flex-shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
@@ -139,12 +148,12 @@ export default function Footer() {
               </a>
 
               <div className="flex items-start gap-4 text-slate-300">
-                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-2xl bg-slate-900/80 border border-slate-700 flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
                   <p className="text-sm text-slate-400">Location</p>
-                  <p className="font-medium leading-tight">
+                  <p className="font-medium leading-tight text-sm sm:text-base">
                     101, Patia<br />
                     Bhubaneswar, Odisha
                   </p>
@@ -155,14 +164,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-20 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
-          <p className="text-slate-500">
+        <div className="mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 text-sm">
+          <p className="text-slate-500 text-center md:text-left">
             © {new Date().getFullYear()} Innoventix. All rights reserved.
           </p>
 
           <button
             onClick={scrollToTop}
-            className="group flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-colors"
+            className="group flex items-center gap-2 text-slate-400 hover:text-cyan-400 transition-colors mx-auto md:mx-0"
           >
             Back to top
             <div className="w-8 h-8 rounded-full border border-slate-700 flex items-center justify-center group-hover:border-cyan-500/50 transition-all">
@@ -170,7 +179,7 @@ export default function Footer() {
             </div>
           </button>
 
-          <p className="text-slate-500 flex items-center gap-1.5">
+          <p className="text-slate-500 flex items-center gap-1.5 justify-center md:justify-end">
             Crafted with{' '}
             <Heart className="w-4 h-4 text-red-500 fill-red-500 animate-pulse" />{' '}
             in Bhubaneswar, India
