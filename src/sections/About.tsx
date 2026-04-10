@@ -1,32 +1,95 @@
 import { useEffect, useRef, useState } from 'react';
 
-export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [counts, setCounts] = useState([0, 0, 0]); // For animated numbers
+// ── Count-up hook ──────────────────────────────────────────────────────────────
+function useCountUp(target: number, duration: number = 1800, start: boolean = false) {
+  const [count, setCount] = useState(0);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
+    if (!start) return;
 
-          // Start counting animation after a small delay
-          setTimeout(() => {
-            animateCounts();
-          }, 400);
-        }
-      },
-      { threshold: 0.2 }
-    );
+    setCount(0); // reset so user always sees it count from zero
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    let startTime: number | null = null;
 
-    return () => observer.disconnect();
-  }, []);
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      setCount(Math.floor(eased * target));
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        setCount(target);
+      }
+    };
+
+    // Double-rAF: lets React flush setCount(0) before counting begins
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = requestAnimationFrame(step);
+    });
+
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
+  }, [start, target, duration]);
+
+  return count;
+}
+
+// ── StatCard ───────────────────────────────────────────────────────────────────
+function StatCard({
+  target,
+  suffix,
+  label,
+  animate,
+  delay = 0,
+  index,
+}: {
+  target: number;
+  suffix: string;
+  label: string;
+  animate: boolean;
+  delay?: number;
+  index: number;
+}) {
+  const [active, setActive] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!animate) return;
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setActive(true), delay);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [animate, delay]);
+
+  const count = useCountUp(target, 1800, active);
+
+  return (
+    <div
+      className={`rounded-3xl border border-cyan-400/10 bg-slate-900/90 p-8 shadow-[0_20px_80px_-50px_rgba(6,182,212,0.35)] transition-all duration-700 ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
+      style={{
+        transitionTimingFunction: 'var(--ease-expo-out)',
+        transitionDelay: `${index * 120}ms`,
+      }}
+    >
+      <div className="text-4xl font-display font-semibold text-white tabular-nums">
+        {count}{suffix}
+      </div>
+      <div className="mt-2 text-slate-400">{label}</div>
+    </div>
+  );
+}
+
+// ── Main component ─────────────────────────────────────────────────────────────
+export default function About() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null); // dedicated ref for stats row
+  const [isVisible, setIsVisible] = useState(false);
+  const [statsVisible, setStatsVisible] = useState(false);
 
   const stats = [
     { target: 10, label: 'Projects Completed', suffix: '+' },
@@ -34,32 +97,35 @@ export default function About() {
     { target: 2, label: 'Years Experience', suffix: '+' },
   ];
 
-  // Count-up animation function
-  const animateCounts = () => {
-    const duration = 1800; // Animation duration in ms
-    const interval = 30;    // Update every 30ms
-    const steps = duration / interval;
-
-    stats.forEach((stat, index) => {
-      let current = 0;
-      const increment = Math.ceil(stat.target / steps);
-
-      const timer = setInterval(() => {
-        current += increment;
-
-        if (current >= stat.target) {
-          current = stat.target;
-          clearInterval(timer);
+  // Section visibility — controls header + cards fade-in
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target);
         }
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-        setCounts((prev) => {
-          const newCounts = [...prev];
-          newCounts[index] = current;
-          return newCounts;
-        });
-      }, interval);
-    });
-  };
+  // Stats grid visibility — fires only when stat cards are on screen
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (statsRef.current) observer.observe(statsRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section
@@ -87,19 +153,23 @@ export default function About() {
               }`}
             style={{ transitionTimingFunction: 'var(--ease-smooth)', transitionDelay: '150ms' }}
           >
-            We are eight focused software specialists delivering scalable digital platforms with a strategic, polished approach. Our experience spans startups, enterprise workflows and product launches built for reliability and velocity.
+            We are eight focused software specialists delivering scalable digital platforms with a
+            strategic, polished approach. Our experience spans startups, enterprise workflows and
+            product launches built for reliability and velocity.
           </p>
         </div>
 
         <div className="mt-16 grid lg:grid-cols-2 gap-6">
-          {/* Left Card - unchanged */}
+          {/* Left Card */}
           <div
             className={`rounded-3xl border border-slate-800/90 bg-slate-900/90 p-8 shadow-[0_25px_100px_-60px_rgba(15,23,42,0.85)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
               }`}
             style={{ transitionTimingFunction: 'var(--ease-expo-out)' }}
           >
             <p className="text-slate-300 leading-relaxed">
-              We design polished digital experiences for investors, executives and end users. Our projects include custom web platforms, secure admin systems, intelligent mobile apps and 3D-informed interfaces that feel premium and intuitive.
+              We design polished digital experiences for investors, executives and end users. Our
+              projects include custom web platforms, secure admin systems, intelligent mobile apps
+              and 3D-informed interfaces that feel premium and intuitive.
             </p>
             <div className="mt-8 space-y-6">
               <div>
@@ -117,13 +187,15 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right Card - unchanged */}
+          {/* Right Card */}
           <div
             className={`rounded-3xl border border-slate-800/90 bg-slate-900/90 p-8 shadow-[0_25px_100px_-60px_rgba(15,23,42,0.85)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
               }`}
             style={{ transitionTimingFunction: 'var(--ease-expo-out)', transitionDelay: '150ms' }}
           >
-            <div className="text-sm uppercase tracking-[0.4em] text-slate-400 mb-4">Core capabilities</div>
+            <div className="text-sm uppercase tracking-[0.4em] text-slate-400 mb-4">
+              Core capabilities
+            </div>
             <ul className="space-y-3 text-slate-300">
               <li className="flex items-start gap-3">
                 <span className="text-cyan-400 mt-1">•</span>
@@ -145,24 +217,21 @@ export default function About() {
           </div>
         </div>
 
-        {/* Stats with Count Animation */}
-        <div className="mt-16 grid md:grid-cols-3 gap-6">
+        {/* Stats — statsRef watches this grid directly */}
+        <div
+          ref={statsRef}
+          className="mt-16 grid md:grid-cols-3 gap-6"
+        >
           {stats.map((stat, index) => (
-            <div
+            <StatCard
               key={stat.label}
-              className={`rounded-3xl border border-cyan-400/10 bg-slate-900/90 p-8 shadow-[0_20px_80px_-50px_rgba(6,182,212,0.35)] transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                }`}
-              style={{
-                transitionTimingFunction: 'var(--ease-expo-out)',
-                transitionDelay: `${300 + index * 120}ms`,
-              }}
-            >
-              <div className="text-4xl font-display font-semibold text-white">
-                {counts[index]}
-                {stat.suffix}
-              </div>
-              <div className="mt-2 text-slate-400">{stat.label}</div>
-            </div>
+              target={stat.target}
+              suffix={stat.suffix}
+              label={stat.label}
+              animate={statsVisible}
+              delay={index * 150}
+              index={index}
+            />
           ))}
         </div>
       </div>

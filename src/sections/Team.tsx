@@ -2,45 +2,91 @@ import { useEffect, useRef, useState } from 'react';
 import { Linkedin, Github, Twitter } from 'lucide-react';
 import founderImg from '/assets/founder-innoventix.png';
 
-function useCountUp(target: number, duration: number = 1600, start: boolean = false) {
+// ── Count-up hook ──────────────────────────────────────────────────────────────
+function useCountUp(target: number, duration: number = 1800, start: boolean = false) {
   const [count, setCount] = useState(0);
+  const rafRef = useRef<number | null>(null);
+
   useEffect(() => {
     if (!start) return;
+
+    // Reset to 0 first so user always sees it count from zero
+    setCount(0);
+
     let startTime: number | null = null;
-    const raf = requestAnimationFrame(function step(timestamp) {
+
+    const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
       setCount(Math.floor(eased * target));
-      if (progress < 1) requestAnimationFrame(step);
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        setCount(target); // guarantee exact final value
+      }
+    };
+
+    // Double-rAF: lets React flush the setCount(0) paint before counting starts
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = requestAnimationFrame(step);
     });
-    return () => cancelAnimationFrame(raf);
+
+    return () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    };
   }, [start, target, duration]);
+
   return count;
 }
 
-function StatCard({ value, label, animate, delay = 0 }: { value: number; label: string; animate: boolean; delay?: number }) {
+// ── StatCard ───────────────────────────────────────────────────────────────────
+function StatCard({
+  value,
+  label,
+  animate,
+  delay = 0,
+}: {
+  value: number;
+  label: string;
+  animate: boolean;
+  delay?: number;
+}) {
   const [active, setActive] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     if (!animate) return;
-    const t = setTimeout(() => setActive(true), delay);
-    return () => clearTimeout(t);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setActive(true), delay);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [animate, delay]);
-  const count = useCountUp(value, 1600, active);
+
+  const count = useCountUp(value, 1800, active);
+
   return (
     <div className="rounded-[18px] border border-slate-700/65 bg-slate-900/80 p-3 sm:p-4 text-center min-w-0">
       <p className="text-xl sm:text-2xl font-display font-semibold text-white tabular-nums">
         {count}<span className="text-sky-400">+</span>
       </p>
-      <p className="text-[10px] sm:text-xs text-slate-400 mt-1.5 leading-snug break-words hyphens-auto">{label}</p>
+      <p className="text-[10px] sm:text-xs text-slate-400 mt-1.5 leading-snug break-words hyphens-auto">
+        {label}
+      </p>
     </div>
   );
 }
 
+// ── Main component ─────────────────────────────────────────────────────────────
 export default function Founder() {
   const sectionRef = useRef<HTMLElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null); // dedicated ref for stats row
   const [isVisible, setIsVisible] = useState(false);
+  const [statsVisible, setStatsVisible] = useState(false);
 
+  // Section visibility (header + card fade-in)
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -49,9 +95,24 @@ export default function Founder() {
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Stats grid visibility — fires when the stats grid itself enters the viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStatsVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5 } // at least half the stats row must be visible
+    );
+    if (statsRef.current) observer.observe(statsRef.current);
     return () => observer.disconnect();
   }, []);
 
@@ -108,23 +169,15 @@ export default function Founder() {
                   'linear-gradient(160deg, rgba(14,67,166,0.4) 0%, rgba(14,165,233,0.22) 50%, rgba(99,102,241,0.25) 100%)',
               }}
             >
-              {/* 
-                MOBILE: fixed height container so face is visible 
-                DESKTOP: absolute fill so image covers full left panel 
-              */}
-
-              {/* Mobile image container — fixed aspect ratio, face centered at top */}
+              {/* Mobile image container */}
               <div className="block md:hidden relative w-full" style={{ height: '420px' }}>
                 <img
                   src={founderImg}
                   alt="Gopinath Sahu — Founder & CEO, Innoventix"
                   className="w-full h-full object-cover"
                   style={{ objectPosition: '50% 8%' }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                 />
-                {/* Gradient overlay for mobile */}
                 <div
                   className="absolute inset-0"
                   style={{
@@ -132,7 +185,6 @@ export default function Founder() {
                       'linear-gradient(to top, rgba(2,6,23,0.98) 0%, rgba(2,6,23,0.55) 42%, transparent 72%)',
                   }}
                 />
-                {/* Name + badge overlaid at bottom of image on mobile */}
                 <div className="absolute bottom-0 left-0 right-0 px-6 pb-6">
                   <h3 className="font-display text-2xl font-bold text-white tracking-tight mb-2">
                     Gopinath Sahu
@@ -149,12 +201,10 @@ export default function Founder() {
                 src={founderImg}
                 alt="Gopinath Sahu — Founder & CEO, Innoventix"
                 className="hidden md:block absolute inset-0 w-full h-full object-cover object-top"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
 
-              {/* Desktop bottom overlay with name + quote + socials */}
+              {/* Desktop bottom overlay */}
               <div
                 className="hidden md:block relative z-10 mt-auto px-8 pb-9 pt-24"
                 style={{
@@ -193,7 +243,7 @@ export default function Founder() {
                 </div>
               </div>
 
-              {/* Mobile — quote + socials BELOW the image block */}
+              {/* Mobile — quote + socials below image */}
               <div className="block md:hidden px-6 pb-8 pt-5 bg-slate-950/90">
                 <div className="h-px bg-slate-700/60 mb-5" />
                 <p className="text-sm text-sky-200/85 leading-[1.75] italic mb-2">
@@ -288,7 +338,11 @@ export default function Founder() {
                 <p className="text-xs uppercase tracking-[0.32em] text-slate-500 mb-3">
                   At a glance
                 </p>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+                {/* statsRef watches exactly this grid element */}
+                <div
+                  ref={statsRef}
+                  className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3"
+                >
                   {[
                     { value: 8, label: 'Years engineering', delay: 0 },
                     { value: 50, label: 'Projects delivered', delay: 150 },
@@ -299,7 +353,7 @@ export default function Founder() {
                       key={item.label}
                       value={item.value}
                       label={item.label}
-                      animate={isVisible}
+                      animate={statsVisible}
                       delay={item.delay}
                     />
                   ))}
